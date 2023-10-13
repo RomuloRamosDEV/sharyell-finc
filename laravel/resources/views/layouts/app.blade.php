@@ -36,5 +36,6 @@
         </div>
 
         @livewireScripts
+        @livewireChartsScripts
     </body>
 </html>

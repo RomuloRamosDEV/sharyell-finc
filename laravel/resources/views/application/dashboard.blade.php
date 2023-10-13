@@ -7,7 +7,12 @@
 
     <div class="dashboard_external">
         <div class="centre">
-            {{$user->name}}
+            <div class="first_graph">
+                <livewire:livewire-pie-chart
+                    key="{{ $pieChartModel->reactiveKey() }}"
+                    :pie-chart-model="$pieChartModel"
+                />
+            </div>
         </div>
     </div>
 
