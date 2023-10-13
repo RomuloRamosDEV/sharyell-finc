@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Builder::defaultStringLength(190);
 
-        View::composer('app/*', function ($view) {
+        View::composer('application/*', function ($view) {
             $view->with('user', \App\Models\User::where('id', Auth::user()->id)->first());  
         });
     }
