@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Categories;
+use Illuminate\Support\Facades\Auth;
 
-class dashboardController extends Controller
+class DashboardController extends Controller
 {
     public function index() {
 
-        $eu = 'Claudia';
-
-        return view('dashboard', compact('eu'));
+        return view('app.dashboard');
     }
 }
