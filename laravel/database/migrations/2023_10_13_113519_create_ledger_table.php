@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('descricao');
             $table->integer('value');
             $table->boolean('remember')->default(0);
+            $table->string('type')->default('livre');
             $table->timestamps();
         });
     }
