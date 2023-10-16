@@ -3,36 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
-use App\Models\Ledger;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index() {
+
         $user = Auth::user();
 
-        $registros = Ledger::where('ledger.user_id', $user->id)
-            // ->where('ledger.type', 'livre')
-            ->leftJoin('categories', 'ledger.category_id', '=', 'categories.id')
-            ->select('categories.titulo as cat_title', 'ledger.*')
-            ->get();
-
-        $categories = Categories::where('user_id', $user->id)->get();
-        // $cat_counted = count($categories);
+        $categories = Categories::where('categories.user_id', $user->id)
+        ->leftJoin('colors', 'colors.id', '=', 'categories.color')
+        ->join('ledger', 'ledger.category_id', '=', 'categories.id')
+        ->select('colors.color as hex', 'ledger.value as value',
+        'categories.*')
+        ->get();
         
-        // $pieChartModel = 
-        //     (new PieChartModel())
-        //         ->setTitle('Gastos Livre')
-        //         ->addSlice('Comida', 100, '#f6ad55')
-        //         ->addSlice('Shopping', 250, '#fc8181')
-        //         ->addSlice('Viagem', 300, '#90cdf4')
-        //     ; 
+        $total = $categories->groupBy('titulo')->map(function ($category) {
+            $category->value = $category->sum('value');
+            return $category; // Retorna a categoria completa com o valor atualizado
+        });
+        
+        // dd($total['Restaurante']->value);
 
         $pieChartModel = (new PieChartModel())->setTitle('Gastos Livre');
 
-        foreach ($categories as $key => $category) {
-            $pieChartModel->addSlice($category->titulo, 200, '#ff00ff');
+        $categories = $categories->unique('titulo');
+
+        foreach ($categories as $category) {
+            if (isset($total[$category->titulo])) {
+                $pieChartModel->addSlice($category->titulo, $total[$category->titulo]->value, $category->hex);
+            }
         }
 
         return view('application.dashboard', compact('pieChartModel'));
