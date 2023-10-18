@@ -16,43 +16,83 @@ class Index extends Component
     public $categories_investimentos;
     public $monthSpent;
 
+    public $total_free;
+    public $total_fixed;
+    public $total_all;
+
     public $start_date;
     public $end_date;
+    public $month;
+
+    public $monthNames = [
+        1 => 'Janeiro',
+        2 => 'Fevereiro',
+        3 => 'Março',
+        4 => 'Abril',
+        5 => 'Maio',
+        6 => 'Junho',
+        7 => 'Julho',
+        8 => 'Agosto',
+        9 => 'Setembro',
+        10 => 'Outubro',
+        11 => 'Novembro',
+        12 => 'Dezembro',
+    ];
 
     public function mount()
     {
         $user = Auth::user();
 
+        $this->month = date('m'); // Obtém o mês atual
+
+        //GASTOS LIVRES
         $this->categories = Categories::where('categories.user_id', $user->id)
             ->where('categories.type', 'saida')
             ->leftJoin('colors', 'colors.id', '=', 'categories.color')
             ->join('ledger', 'ledger.category_id', '=', 'categories.id')
             ->where('ledger.type', 'livre')
-            ->select('colors.color as hex', 'ledger.value as value',
-            'categories.*')
+            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->select('colors.color as hex', 'ledger.value as value', 'categories.*')
             ->get();
 
+        //GASTOS FIXOS
         $this->categories_fixo = Categories::where('categories.user_id', $user->id)
             ->where('categories.type', 'saida')
             ->leftJoin('colors', 'colors.id', '=', 'categories.color')
             ->join('ledger', 'ledger.category_id', '=', 'categories.id')
             ->where('ledger.type', 'fixo')
-            ->select('colors.color as hex', 'ledger.value as value',
-            'categories.*')
+            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->select('colors.color as hex', 'ledger.value as value','categories.*')
             ->get();
 
-        $this->categories_investimentos = Categories::where('categories.user_id', $user->id)
-            ->where('categories.type', 'investimento')
-            ->leftJoin('colors', 'colors.id', '=', 'categories.color')
-            ->join('ledger', 'ledger.category_id', '=', 'categories.id')
-            ->select('colors.color as hex', 'ledger.value as value',
-            'categories.*')
-            ->get();
-
+        //GASTOS POR MÊS
         $this->monthSpent = Ledger::selectRaw('DATE_FORMAT(created_at, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
             ->get();
-    
+
+        //GASTOS LIVRES TOTAIS
+        $this->total_free = Ledger::where('ledger.user_id', $user->id)
+            ->where('ledger.type', 'livre')
+            ->join('categories', 'categories.id', '=', 'ledger.category_id')
+            ->where('categories.type', 'saida')
+            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->select('ledger.*')
+            ->get();
+        
+        $this->total_free = $this->total_free->sum('value');
+
+        //GASTOS FIXOS TOTAIS
+        $this->total_fixed = Ledger::where('ledger.user_id', $user->id)
+            ->where('ledger.type', 'fixo')
+            ->join('categories', 'categories.id', '=', 'ledger.category_id')
+            ->where('categories.type', 'saida')
+            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->select('ledger.*')
+            ->get();
+        
+        $this->total_fixed = $this->total_fixed->sum('value');
+
+        $this->total_all = $this->total_free + $this->total_fixed;
     }
 
     public function render()
@@ -88,7 +128,6 @@ class Index extends Component
                 $pieChartModelFixo->addSlice($cat_fixo->titulo, $total_fixo[$cat_fixo->titulo]->value, $cat_fixo->hex);
             }
         }
-
         
         //Grafico dos meses de gastos
         $lineChartModel = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
@@ -97,24 +136,7 @@ class Index extends Component
             $lineChartModel->addSeriesPoint('Linha', $month->month, $month->total_spent)->addColor('#b70000');
         }
 
-
-        //Chamada para gráfico Investimentos
-        $total_investido = $this->categories_investimentos->groupBy('titulo')->map(function ($category_invest) {
-            $category_invest->value = $category_invest->sum('value');
-            return $category_invest; // Retorna a categoria completa com o valor atualizado
-        });
-
-        $pieChartModelInvest = (new PieChartModel())->withDataLabels()->setAnimated(true)->setOpacity(0.85);
-
-        $this->categories_investimentos = $this->categories_investimentos->unique('titulo');
-
-        foreach ($this->categories_investimentos as $cat_invest) {
-            if (isset($total_investido[$cat_invest->titulo])) {
-                $pieChartModelInvest->addSlice($cat_invest->titulo, $total_investido[$cat_invest->titulo]->value, $cat_invest->hex);
-            }
-        }
-
-        return view('livewire.dashboard.index', compact('pieChartModel', 'pieChartModelFixo', 'lineChartModel', 'pieChartModelInvest'));
+        return view('livewire.dashboard.index', compact('pieChartModel', 'pieChartModelFixo', 'lineChartModel'));
     }
 
     public function filterDate() {
@@ -127,7 +149,7 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'livre')
-                ->where('ledger.created_at', '>', $this->start_date)->where('ledger.created_at', '<', $this->end_date)
+                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
@@ -137,10 +159,34 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'fixo')
-                ->where('ledger.created_at', '>', $this->start_date)->where('ledger.created_at', '<', $this->end_date)
+                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
+
+            //GASTOS LIVRES TOTAIS
+            $this->total_free = Ledger::where('ledger.user_id', $user->id)
+                ->where('ledger.type', 'livre')
+                ->join('categories', 'categories.id', '=', 'ledger.category_id')
+                ->where('categories.type', 'saida')
+                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
+                ->select('ledger.*')
+                ->get();
+    
+            $this->total_free = $this->total_free->sum('value');
+
+            //GASTOS FIXOS TOTAIS
+            $this->total_fixed = Ledger::where('ledger.user_id', $user->id)
+                ->where('ledger.type', 'fixo')
+                ->join('categories', 'categories.id', '=', 'ledger.category_id')
+                ->where('categories.type', 'saida')
+                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
+                ->select('ledger.*')
+                ->get();
+            
+            $this->total_fixed = $this->total_fixed->sum('value');
+
+            $this->total_all = $this->total_free + $this->total_fixed;
 
         } elseif (isset($this->start_date)) {
 
@@ -149,7 +195,7 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'livre')
-                ->where('ledger.created_at', '>', $this->start_date)
+                ->where('ledger.created_at', '>=', $this->start_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
@@ -159,12 +205,42 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'fixo')
-                ->where('ledger.created_at', '>', $this->start_date)
+                ->where('ledger.created_at', '>=', $this->start_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
+
+            //GASTOS LIVRES TOTAIS
+            $this->total_free = Ledger::where('ledger.user_id', $user->id)
+                ->where('ledger.type', 'livre')
+                ->join('categories', 'categories.id', '=', 'ledger.category_id')
+                ->where('categories.type', 'saida')
+                ->where('ledger.created_at', '>=', $this->start_date)
+                ->select('ledger.*')
+                ->get();
+    
+            $this->total_free = $this->total_free->sum('value');
+
+            //GASTOS FIXOS TOTAIS
+            $this->total_fixed = Ledger::where('ledger.user_id', $user->id)
+                ->where('ledger.type', 'fixo')
+                ->join('categories', 'categories.id', '=', 'ledger.category_id')
+                ->where('categories.type', 'saida')
+                ->where('ledger.created_at', '>=', $this->start_date)
+                ->select('ledger.*')
+                ->get();
+            
+            $this->total_fixed = $this->total_fixed->sum('value');
+
+            $this->total_all = $this->total_free + $this->total_fixed;
         }
 
+        $this->monthSpent = Ledger::selectRaw('DATE_FORMAT(created_at, "%m-%Y") as month, SUM(value) as total_spent')
+            ->groupBy('month')
+            ->get();
+    }
 
+    public function cleanFilter() {
+        return to_route('dashboard');
     }
 }

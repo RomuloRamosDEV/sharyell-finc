@@ -109,7 +109,7 @@ normalize();
 
 //BOTOES BTNs
 .btn_search
-    width: 100px
+    width: 60px
     height: 45px
     jakarta 17
     background-color: $verdeMusgo
@@ -122,8 +122,33 @@ normalize();
     transition: all 0.3s
     user-select: none
     &:hover
-        transform: scale(1.03)
-        background-color: $verdeMusgo
+        transform: scale(1.05)
+        background-color: $verdeMedio
+
+    img
+        height: 35px
+        width: 35px
+
+.btn_clean
+    width: 35px
+    height: 30px
+    jakarta 17
+    background-color: darkred
+    color: $branco
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 6px
+    cursor pointer
+    transition: all 0.3s
+    user-select: none
+    &:hover
+        transform: scale(1.05)
+        background-color: rgb(78, 0, 0)
+
+    img
+        height: 25px
+        width: 25px
 
 .btn_update
     width: 150px
@@ -208,9 +233,14 @@ normalize();
     cursor pointer
     user-select: none
     transition: all 0.3s
+    column-gap: 5px
     &:hover
         transform: scale(1.05)
         background-color: #610000
+
+    img
+        height: 20px
+        width: 20px
 
 .btn_add_earn
     height: 45px
@@ -225,9 +255,14 @@ normalize();
     cursor pointer
     user-select: none
     transition: all 0.3s
+    column-gap: 5px
     &:hover
         transform: scale(1.05)
         background-color: $verdeMedio
+
+    img
+        height: 20px
+        width: 20px
 
 //BOTAO VOLTAR
 .before_btn
