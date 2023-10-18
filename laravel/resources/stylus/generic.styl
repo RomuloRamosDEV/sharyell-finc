@@ -48,53 +48,57 @@ normalize();
     text-align: center
 
 
-//INPUT DE UPLOAD FILE
-.btn_upload
-    display: flex
+//INPUTS E UPLOAD FILE
+.input_default
+    width: 100%
+    border: 1px solid lightgrey
+    border-radius: 6px
+    height: 38px
+    jakarta 15
 
-    .btn_file_upload
-        position relative
-        min-width: 143px
-        height: 38px
-        border-top-left-radius: 6px
-        border-bottom-left-radius: 6px
-        background-color: $marrom_2
-        display: flex
-        justify-content: center
-        align-items: center
-        jakarta 13
-        color: $branco
-        cursor pointer
-        transition: all 0.3s
-        &:hover
-            background-color: $marrom_4
+.select_default
+    width: 100%
+    border: 1px solid lightgrey
+    border-radius: 6px
+    height: 38px
+    jakarta 15
 
-    .fake_file_input
-        border: 1px solid lightgrey
-        border-top-right-radius: 6px
-        border-bottom-right-radius: 6px
-        width: 100%
-        height: 38px
-        cursor pointer
-        display: flex
+.date_input
+    width: 150px
+    border: 1px solid $verdeMusgo
+    border-radius: 6px
+    height: 45px
+    jakarta 15
+    color: $verdeMedio
+    font-weight: 500
+    margin-bottom: 10px
 
-        .white_bar
-            position relative
-            height: 100%
-            margin-left: -1px
-            width: 25px
-            z-index: 1
-            background-color: white
+.form_line
+    margin-bottom: 15px
 
-        .archive_name
-            width: 100%
-            margin-left: -138px
-            cursor pointer
-            jakarta 15
-            color: $marrom_4
-            margin-top: 2px
-            &:focus
-                outline: none
+.select_client
+    width: 100%
+    border: 1px solid $marrom_4
+    border-radius: 6px
+    height: 45px
+    jakarta 15
+    color: $marrom_4
+    font-weight: 500
+    margin-bottom: 10px
+
+.label_client
+    display: block
+    jakarta 16
+    margin: 0
+    margin-bottom: 10px
+    color: $marrom_4
+
+.form_title
+    margin: 0
+    jakarta 19
+    color: $marrom_4
+    font-weight: 600
+    margin-bottom: 25px
 
 
 
@@ -104,11 +108,11 @@ normalize();
 
 
 //BOTOES BTNs
-.btn_update
-    width: 150px
+.btn_search
+    width: 100px
     height: 45px
     jakarta 17
-    background-color: $marrom_3
+    background-color: $verdeMusgo
     color: $branco
     display: flex
     justify-content: center
@@ -119,10 +123,10 @@ normalize();
     user-select: none
     &:hover
         transform: scale(1.03)
-        background-color: $marrom_4
+        background-color: $verdeMusgo
 
-.btn_update_client
-    width: 100%
+.btn_update
+    width: 150px
     height: 45px
     jakarta 17
     background-color: $marrom_3
@@ -191,24 +195,39 @@ normalize();
         transform: scale(1.03)
         background-color: #610000
 
-
-.btn_imagens
-    height: 35px
-    width: 150px
+.btn_add_spent
+    height: 45px
     padding: 0 10px
-    jakarta 15
-    background-color: grey
+    jakarta 17
+    background-color: darkred
     color: $branco
     display: flex
     justify-content: center
     align-items: center
-    border-radius 8px
+    border-radius: 6px
     cursor pointer
     user-select: none
     transition: all 0.3s
     &:hover
-        transform: scale(1.03)
-        background-color: $marrom_4
+        transform: scale(1.05)
+        background-color: #610000
+
+.btn_add_earn
+    height: 45px
+    padding: 0 10px
+    jakarta 17
+    background-color: $verdeClaro
+    color: $branco
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 6px
+    cursor pointer
+    user-select: none
+    transition: all 0.3s
+    &:hover
+        transform: scale(1.05)
+        background-color: $verdeMedio
 
 //BOTAO VOLTAR
 .before_btn
@@ -250,83 +269,6 @@ normalize();
         transform: scale(1.03)
         background-color: $marrom_4
 
-.btn_back_client
-    width: 100%
-    height: 30px
-    margin-top: 5px
-    jakarta 15
-    background-color: darkgrey
-    color: $branco
-    display: flex
-    justify-content: center
-    align-items: center
-    border-radius: 6px
-    cursor pointer
-    user-select: none
-    transition: all 0.3s
-    &:hover
-        background-color: grey
-
-//BOTOES FLEX
-.btn_flex
-    display: flex
-    column-gap: 20px
-    align-items: center
-
-
-//INPUT PADRÃO
-.input_default
-    width: 100%
-    border: 1px solid lightgrey
-    border-radius: 6px
-    height: 38px
-    jakarta 15
-
-.select_default
-    width: 100%
-    border: 1px solid lightgrey
-    border-radius: 6px
-    height: 38px
-    jakarta 15
-
-.input_client
-    width: 100%
-    border: 1px solid $marrom_4
-    border-radius: 6px
-    height: 45px
-    jakarta 15
-    color: $marrom_4
-    font-weight: 500
-    margin-bottom: 10px
-
-.form_line
-    margin-bottom: 15px
-
-.select_client
-    width: 100%
-    border: 1px solid $marrom_4
-    border-radius: 6px
-    height: 45px
-    jakarta 15
-    color: $marrom_4
-    font-weight: 500
-    margin-bottom: 10px
-
-.label_client
-    display: block
-    jakarta 16
-    margin: 0
-    margin-bottom: 10px
-    color: $marrom_4
-
-.form_title
-    margin: 0
-    jakarta 19
-    color: $marrom_4
-    font-weight: 600
-    margin-bottom: 25px
-
-
 
 //SEPARADOR CLIENTE PADRAO
 .separator_client
@@ -364,3 +306,52 @@ normalize();
         jakarta 16
         margin-bottom: 15px
         text-align: center
+
+
+//OUTROS
+// .btn_upload
+//     display: flex
+
+//     .btn_file_upload
+//         position relative
+//         min-width: 143px
+//         height: 38px
+//         border-top-left-radius: 6px
+//         border-bottom-left-radius: 6px
+//         background-color: $marrom_2
+//         display: flex
+//         justify-content: center
+//         align-items: center
+//         jakarta 13
+//         color: $branco
+//         cursor pointer
+//         transition: all 0.3s
+//         &:hover
+//             background-color: $marrom_4
+
+//     .fake_file_input
+//         border: 1px solid lightgrey
+//         border-top-right-radius: 6px
+//         border-bottom-right-radius: 6px
+//         width: 100%
+//         height: 38px
+//         cursor pointer
+//         display: flex
+
+//         .white_bar
+//             position relative
+//             height: 100%
+//             margin-left: -1px
+//             width: 25px
+//             z-index: 1
+//             background-color: white
+
+//         .archive_name
+//             width: 100%
+//             margin-left: -138px
+//             cursor pointer
+//             jakarta 15
+//             color: $marrom_4
+//             margin-top: 2px
+//             &:focus
+//                 outline: none

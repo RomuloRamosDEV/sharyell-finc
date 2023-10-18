@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('slug');
             $table->foreignId('color_id')->constrained('colors');
+            $table->string('type')->default('saida');
             $table->timestamps();
         });
     }
