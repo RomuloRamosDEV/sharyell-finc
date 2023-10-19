@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Categories;
+use App\Models\Goal;
 use App\Models\Ledger;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
@@ -15,6 +16,7 @@ class Index extends Component
     public $categories_fixo;
     public $categories_investimentos;
     public $monthSpent;
+    public $goals;
 
     public $total_free;
     public $total_fixed;
@@ -93,6 +95,8 @@ class Index extends Component
         $this->total_fixed = $this->total_fixed->sum('value');
 
         $this->total_all = $this->total_free + $this->total_fixed;
+
+        $this->goals = Goal::where('user_id', $user->id)->first();
     }
 
     public function render()

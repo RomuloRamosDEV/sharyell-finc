@@ -69,36 +69,52 @@
                 </div>
             </div>
 
-            <div class="extra_info">
-                <div class="bg_spent">
-                    <div class="spacing">
-                        <p class="free_spent">Gasto total Livre: </p>
-                        <p class="free_spent" style="min-width:70px">R$ {{$total_free}}</p>
+            <div class="third_card">
+                <div class="extra_info">
+                    <div class="bg_spent">
+                        <div class="spacing">
+                            <p class="free_spent">Gasto total Livre: </p>
+                            <p class="free_spent" style="min-width:84px">R$ {{$total_free}}</p>
+                        </div>
+    
+                        <div class="spacing">
+                            <p class="free_spent">Gasto total Fixo: </p>
+                            <p class="free_spent" style="min-width:84px">R$ {{$total_fixed}}</p>
+                        </div>
+    
+                        <div class="spacing">
+                            <p class="free_spent" style="font-size:17px"><b>Gasto total Geral: </b></p>
+                            <p class="free_spent" style="min-width:84px;font-size:17px"><b>R$ {{$total_all}}</b></p>
+                        </div>
                     </div>
-
-                    <div class="spacing">
-                        <p class="free_spent">Gasto total Fixo: </p>
-                        <p class="free_spent" style="min-width:70px">R$ {{$total_fixed}}</p>
-                    </div>
-
-                    <div class="spacing">
-                        <p class="free_spent"><b>Gasto total Geral: </b></p>
-                        <p class="free_spent" style="min-width:70px"><b>R$ {{$total_all}}</b></p>
-                    </div>
+    
+                    
+                    <h2 class="month_title">
+                        @if (isset($start_date))
+                            {{date("d/m/Y", strtotime($start_date))}}
+                        @else
+                            {{$monthNames[$month]}}
+                        @endif
+                    </h2>
                 </div>
-
-                <h2 class="month_title">
-                    @if (isset($start_date))
-                        {{date("d/m/Y", strtotime($start_date))}}
-                    @else
-                        {{$monthNames[$month]}}
+                
+                <div class="goal">
+                    <div class="bar"></div>
+                    @if (isset($goals->goal_spend))
+                    <div class="goal_add">
+                        <div class="number">Meta R${{$goals->goal_spend}}</div>
+                        <div class="adder"><img src="{{asset('img/layout/add-circle-outline.svg')}}" alt="add"></div>
+                    </div>
+                    @else 
+                    <div class="goal_add">
+                        <div class="number">Meta Não Definida</div>
+                        <div class="adder"><img src="{{asset('img/layout/add-circle-outline.svg')}}" alt="add"></div>
+                    </div>
                     @endif
-                </h2>
+                </div>
             </div>
 
-            <div class="goal">
-                CRIAR META AQUI
-            </div>
+            
 
             <div class="card_liner">
                 <div class="infos">
