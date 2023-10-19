@@ -2,21 +2,20 @@
     background-color: #f3f3f3
     min-height: 900px
 
-    .centre
-        display block
-        max-width: 1200px
-        margin-left: auto
-        margin-right: auto
-        padding-top: 50px
-        padding-bottom: 70px
-        @media (max-width: 1230px)
-            max-width: 90%
-
+    .livewire_dash
         .implements
-            display: flex
-            column-gap: 35px
-            justify-content: space-between
-            align-items: center
+            padding-top: 30px
+            padding-bottom: 30px
+            background-color: #ddd9e2
+
+            .center
+                display: flex
+                max-width: 1200px
+                margin-left: auto
+                margin-right: auto
+                column-gap: 35px
+                justify-content: space-between
+                align-items: center
 
             .filters
                 display: flex
@@ -26,103 +25,112 @@
                 display: flex
                 column-gap: 15px
 
+        .centre
+            display block
+            max-width: 1200px
+            margin-left: auto
+            margin-right: auto
+            padding-top: 10px
+            padding-bottom: 70px
+            @media (max-width: 1230px)
+                max-width: 90%
 
-        .super_title
-            jakarta 28
-            font-weight: 600
-            text-align: center
+            .super_title
+                jakarta 28
+                font-weight: 600
+                text-align: center
 
-        .father
-            display: flex
-            padding-top: 60px
-            justify-content: space-between
-            column-gap: 25px
-            row-gap: 60px
-            flex-wrap: wrap
+            .father
+                display: flex
+                padding-top: 35px
+                justify-content: space-between
+                column-gap: 25px
+                row-gap: 60px
+                flex-wrap: wrap
 
-            .card
-                background-color: white
-                box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2)
-                width: 420px
-                border-radius: 6px
-
-                .graph_free
-                    width: 370px
-                    height: 370px
-                    margin: 0 auto
-
-                    .no_data
-                        jakarta 18
-                        text-align: center
-
-                .infos
-                    margin-top: 30px
-
-                    .title
-                        jakarta 18
-                        font-weight: 600
-                        text-align: center
-                        padding: 0 20px
-                        margin: 0
-
-            .extra_info
-                position: relative
-                width: 300px
-                background-color: white
-                height: min-content
-                box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2)
-                border-radius: 6px
-                margin-top: 24px
-
-                .bg_spent
-                    position: absolute
-                    padding: 10px 15px
-                    z-index 2
-                    background-color: rgb(148, 22, 22)
+                .card
+                    background-color: white
+                    box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2)
+                    width: 420px
                     border-radius: 6px
-                    width: 90%
-                    top: -25px
-                    left: 50%
-                    transform: translateX(-50%)
 
-                    .spacing
-                        display: flex
-                        justify-content: space-between
-                        column-gap: 15px
-                        .free_spent
+                    .graph_free
+                        width: 370px
+                        height: 370px
+                        margin: 0 auto
+
+                        .no_data
+                            jakarta 18
+                            text-align: center
+
+                    .infos
+                        margin-top: 30px
+
+                        .title
+                            jakarta 18
+                            font-weight: 600
+                            text-align: center
+                            padding: 0 20px
                             margin: 0
-                            jakarta 16
-                            color: white
+
+                .extra_info
+                    position: relative
+                    width: 300px
+                    background-color: white
+                    height: min-content
+                    box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2)
+                    border-radius: 6px
+                    margin-top: 24px
+
+                    .bg_spent
+                        position: absolute
+                        padding: 10px 15px
+                        z-index 2
+                        background-color: rgb(148, 22, 22)
+                        border-radius: 6px
+                        width: 90%
+                        top: -25px
+                        left: 50%
+                        transform: translateX(-50%)
+
+                        .spacing
+                            display: flex
+                            justify-content: space-between
+                            column-gap: 15px
+                            .free_spent
+                                margin: 0
+                                jakarta 16
+                                color: white
 
 
-                .month_title
-                    margin: 0
-                    jakarta 16
-                    margin-top: 80px
-                    text-align: center
-                    padding-bottom: 15px
-
-            .card_liner
-                background-color: white
-                box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2)
-                width: 100%
-                border-radius: 6px
-                background-color: rgb(255, 233, 233)
-                
-                .infos
-                    margin-top: 30px
-                    margin-bottom: 0px
-
-                    .title
-                        jakarta 18
-                        font-weight: 600
-                        text-align: center
-                        padding: 0 20px
+                    .month_title
                         margin: 0
+                        jakarta 16
+                        margin-top: 80px
+                        text-align: center
+                        padding-bottom: 15px
 
-                .graph_liner
+                .card_liner
+                    background-color: white
+                    box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.2)
                     width: 100%
-                    height: 300px
-                    margin: 0 auto
+                    border-radius: 6px
                     background-color: rgb(255, 233, 233)
+                    
+                    .infos
+                        margin-top: 30px
+                        margin-bottom: 0px
+
+                        .title
+                            jakarta 18
+                            font-weight: 600
+                            text-align: center
+                            padding: 0 20px
+                            margin: 0
+
+                    .graph_liner
+                        width: 100%
+                        height: 300px
+                        margin: 0 auto
+                        background-color: rgb(255, 233, 233)
 
