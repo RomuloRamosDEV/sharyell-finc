@@ -23,6 +23,10 @@
                     <img src="{{asset('img/layout/add-circle-outline.svg')}}" alt="add">
                     Entradas
                 </div>
+
+                <livewire:dashboard.include-pop-up>
+ 
+                <div class="pop_up_bg"></div>
             </div>
         </div>
     </div>
