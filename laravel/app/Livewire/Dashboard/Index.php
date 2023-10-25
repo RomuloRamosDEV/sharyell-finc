@@ -68,7 +68,10 @@ class Index extends Component
             ->get();
 
         //GASTOS POR MÊS
-        $this->monthSpent = Ledger::selectRaw('DATE_FORMAT(created_at, "%m-%Y") as month, SUM(value) as total_spent')
+        $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
+            ->join('categories', 'ledger.category_id', '=', 'categories.id')
+            ->where('categories.type', 'saida')
+            ->selectRaw('DATE_FORMAT(ledger.created_at, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
             ->get();
 
@@ -137,6 +140,7 @@ class Index extends Component
         $lineChartModel = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
 
         foreach ($this->monthSpent as $month) {
+            $month->total_spent = (double)number_format($month->total_spent / 100, 2, '.', '');
             $lineChartModel->addSeriesPoint('Linha', $month->month, $month->total_spent)->addColor('#b70000');
         }
 
@@ -239,7 +243,10 @@ class Index extends Component
             $this->total_all = $this->total_free + $this->total_fixed;
         }
 
-        $this->monthSpent = Ledger::selectRaw('DATE_FORMAT(created_at, "%m-%Y") as month, SUM(value) as total_spent')
+        $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
+            ->join('categories', 'ledger.category_id', '=', 'categories.id')
+            ->where('categories.type', 'saida')
+            ->selectRaw('DATE_FORMAT(ledger.created_at, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
             ->get();
     }

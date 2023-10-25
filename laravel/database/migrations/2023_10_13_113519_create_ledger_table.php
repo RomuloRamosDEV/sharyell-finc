@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->string('descricao');
             $table->integer('value');
+            $table->date('date');
             $table->boolean('remember')->default(0);
             $table->string('type')->default('livre');
             $table->timestamps();

@@ -3,10 +3,9 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Categories;
-
 use Livewire\Component;
 
-class IncludePopUp extends Component
+class ExcludePopUp extends Component
 {
     public $categories;
 
@@ -14,9 +13,8 @@ class IncludePopUp extends Component
 
     public function render()
     {
-        $this->categories = Categories::where('type', 'entrada')->get();
+        $this->categories = Categories::where('type', 'saida')->get();
 
-        return view('livewire.dashboard.include-pop-up');
+        return view('livewire.dashboard.exclude-pop-up');
     }
-
 }

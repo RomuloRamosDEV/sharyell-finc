@@ -49,25 +49,33 @@ normalize();
 
 
 //INPUTS E UPLOAD FILE
-.input_default
-    width: 100%
-    border: 1px solid lightgrey
-    border-radius: 6px
-    height: 38px
-    jakarta 15
+.input_text
+    height: 40px
+    border-radius: 8px
+    border: 1px solid $verdeMusgo
+    jakarta 16
+    color: $roxo
+    font-weight: 500
+
+.input_number
+    height: 40px
+    border-radius: 8px
+    border: 1px solid $verdeMusgo
+    color: $roxo
+    font-weight: 500
 
 .select_default
-    width: 100%
-    border: 1px solid lightgrey
-    border-radius: 6px
-    height: 38px
-    jakarta 15
+    height: 40px
+    border-radius: 8px
+    border: 1px solid $verdeMusgo
+    color: $verdeMedio
+    jakarta 16
 
 .date_input
     width: 150px
     border: 1px solid $verdeMusgo
     border-radius: 6px
-    height: 45px
+    height: 40px
     jakarta 15
     color: $verdeMedio
     font-weight: 500
@@ -85,12 +93,10 @@ normalize();
     font-weight: 500
     margin-bottom: 10px
 
-.label_client
-    display: block
+.label_default
     jakarta 16
     margin: 0
-    margin-bottom: 10px
-    color: $marrom_4
+    color: white
 
 .form_title
     margin: 0
@@ -202,6 +208,31 @@ normalize();
     &:hover
         transform: scale(1.03)
         background-color: $marrom_4
+
+.btn_create_negativo
+    width: 180px
+    height: 40px
+    jakarta 16
+    font-weight: 600
+    text-transform: uppercase
+    background-color: white
+    color: $verdeMedio
+    display: flex
+    justify-content: center
+    align-items: center
+    margin: 0 auto
+    margin-top: 20px
+    border-radius: 6px
+    cursor pointer
+    user-select: none
+    transition: all 0.3s
+    @media (max-width: 390px)
+        width: 100%
+        border: 2px solid green
+    &:hover
+        transform: scale(1.03)
+        background-color: $verdeClaro
+        color: white
 
 .btn_edit
     height: 35px
@@ -333,15 +364,6 @@ normalize();
 
 
 //POP UP GENERICO
-// .bg_popup
-//     position fixed
-//     z-index: 101
-//     width: 100%
-//     height: 100%
-//     top: 0
-//     left: 0
-//     background-color: rgba(0,0,0,0.3)
-
 .pop_up_bg
     position fixed
     z-index: 101
@@ -370,51 +392,3 @@ normalize();
         margin-bottom: 15px
         text-align: center
 
-
-//OUTROS
-// .btn_upload
-//     display: flex
-
-//     .btn_file_upload
-//         position relative
-//         min-width: 143px
-//         height: 38px
-//         border-top-left-radius: 6px
-//         border-bottom-left-radius: 6px
-//         background-color: $marrom_2
-//         display: flex
-//         justify-content: center
-//         align-items: center
-//         jakarta 13
-//         color: $branco
-//         cursor pointer
-//         transition: all 0.3s
-//         &:hover
-//             background-color: $marrom_4
-
-//     .fake_file_input
-//         border: 1px solid lightgrey
-//         border-top-right-radius: 6px
-//         border-bottom-right-radius: 6px
-//         width: 100%
-//         height: 38px
-//         cursor pointer
-//         display: flex
-
-//         .white_bar
-//             position relative
-//             height: 100%
-//             margin-left: -1px
-//             width: 25px
-//             z-index: 1
-//             background-color: white
-
-//         .archive_name
-//             width: 100%
-//             margin-left: -138px
-//             cursor pointer
-//             jakarta 15
-//             color: $marrom_4
-//             margin-top: 2px
-//             &:focus
-//                 outline: none
