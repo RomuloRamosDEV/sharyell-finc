@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('goal_spend')->nullable();
             $table->string('goal_earn')->nullable();
+            $table->date('month')->nullable();
             $table->timestamps();
         });
     }

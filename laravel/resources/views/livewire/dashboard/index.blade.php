@@ -106,7 +106,18 @@
                 </div>
                 
                 <div class="goal" x-data="{pop_goal: false}">
-                    <div class="bar"></div>
+                    <div class="bar_box">
+                        @if (isset($goals->goal_spend))
+                            @if($goal_percent <= 50)
+                                <div class="bar" style="width: {{$goal_percent}}%;background-color: #5ab65f"></div>
+                            @elseif($goal_percent >= 50 and $goal_percent <= 99)
+                                <div class="bar" style="width: {{$goal_percent}}%;background-color: #61958E"></div>
+                            @elseif($goal_percent == 100)
+                                <div class="bar" style="width: {{$goal_percent}}%;background-color: darkred"></div>
+                            @endif
+                        @endif
+                    </div>
+
                     @if (isset($goals->goal_spend))
                     <div class="goal_add">
                         <div class="number">Meta R$ {{ number_format($goals->goal_spend / 100, 2, ',', '.') }}</div>

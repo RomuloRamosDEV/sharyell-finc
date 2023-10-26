@@ -17,6 +17,7 @@ class Index extends Component
     public $categories_investimentos;
     public $monthSpent;
     public $goals;
+    public $goal_percent;
 
     public $total_free;
     public $total_fixed;
@@ -99,7 +100,17 @@ class Index extends Component
 
         $this->total_all = $this->total_free + $this->total_fixed;
 
-        $this->goals = Goal::where('user_id', $user->id)->first();
+        //META DE GASTO
+        $this->goals = Goal::where('user_id', $user->id)->whereMonth('month', '=', $this->month)->first();
+
+        // CALCULO DA PORCENTAGEM DA META
+        if (isset($this->goals->goal_spend)) {
+            $this->goal_percent = ($this->total_all / $this->goals->goal_spend) * 100;
+
+            if ($this->goal_percent >= 100) {
+                $this->goal_percent = 100;
+            }
+        }
     }
 
     public function render()

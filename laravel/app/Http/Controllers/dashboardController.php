@@ -91,13 +91,17 @@ class DashboardController extends Controller
         try {
             $user = Auth::user();
 
+            $month = date('m');
+
+            $month_save = date('Y-m') . '-01';
+
             $request->validate([
                 'goal_spend' => 'required',
             ]);
             
             $valor = str_replace([' ', ',', '.', 'R', '$'], '', $request->goal_spend);
 
-            $goal = Goal::where('user_id', $user->id)->first();
+            $goal = Goal::where('user_id', $user->id)->whereMonth('month', '=', $month)->first();
 
             if($goal) {
                 $goal->goal_spend = $valor;
@@ -109,6 +113,7 @@ class DashboardController extends Controller
                 $goal = new Goal();
                 $goal->user_id = $user->id;
                 $goal->goal_spend = $valor;
+                $goal->month = $month_save;
                 $goal->save();
                 
             }
