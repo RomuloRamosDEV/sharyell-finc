@@ -105,8 +105,8 @@ class Index extends Component
 
         // CALCULO DA PORCENTAGEM DA META
         if (isset($this->goals->goal_spend)) {
-            $this->goal_percent = ($this->total_all / $this->goals->goal_spend) * 100;
-
+            $this->goal_percent = round(($this->total_all / $this->goals->goal_spend) * 100, 2);
+            
             if ($this->goal_percent >= 100) {
                 $this->goal_percent = 100;
             }

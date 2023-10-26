@@ -108,11 +108,11 @@
                 <div class="goal" x-data="{pop_goal: false}">
                     <div class="bar_box">
                         @if (isset($goals->goal_spend))
-                            @if($goal_percent <= 50)
+                            @if($goal_percent <= 69.00)
                                 <div class="bar" style="width: {{$goal_percent}}%;background-color: #5ab65f"></div>
-                            @elseif($goal_percent >= 50 and $goal_percent <= 99)
+                            @elseif($goal_percent >= 69.01 and $goal_percent <= 99.99)
                                 <div class="bar" style="width: {{$goal_percent}}%;background-color: #61958E"></div>
-                            @elseif($goal_percent == 100)
+                            @elseif($goal_percent == 100.00)
                                 <div class="bar" style="width: {{$goal_percent}}%;background-color: darkred"></div>
                             @endif
                         @endif
@@ -127,7 +127,7 @@
                     </div>
                     @else 
                     <div class="goal_add">
-                        <div class="number">Meta de Gastos Não Definida</div>
+                        <div class="number">Sem meta de gasto para este mês</div>
                         <div class="adder" x-on:click="pop_goal = true">
                             <img src="{{asset('img/layout/add-circle-outline.svg')}}" alt="add">
                         </div>
