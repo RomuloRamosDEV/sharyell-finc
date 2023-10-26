@@ -120,7 +120,7 @@
 
                     @if (isset($goals->goal_spend))
                     <div class="goal_add">
-                        <div class="number">Meta R$ {{ number_format($goals->goal_spend / 100, 2, ',', '.') }}</div>
+                        <div class="number">Meta de Gasto: R$ {{ number_format($goals->goal_spend / 100, 2, ',', '.') }}</div>
                         <div class="adder" x-on:click="pop_goal = true">
                             <img src="{{asset('img/layout/add-circle-outline.svg')}}" alt="add">
                         </div>
