@@ -108,12 +108,17 @@
                 <div class="goal" x-data="{pop_goal: false}">
                     <div class="bar_box">
                         @if (isset($goals->goal_spend))
-                            @if($goal_percent <= 69.00)
+                            @if ($goal_percent <= 20.10)
                                 <div class="bar" style="width: {{$goal_percent}}%;background-color: #5ab65f"></div>
+                            @elseif($goal_percent <= 69.00)
+                                <div class="bar" style="width: {{$goal_percent}}%;background-color: #5ab65f"></div>
+                                <div class="percentage" style="width:{{$goal_percent}}%">{{$goal_percent}}%</div>
                             @elseif($goal_percent >= 69.01 and $goal_percent <= 99.99)
                                 <div class="bar" style="width: {{$goal_percent}}%;background-color: #61958E"></div>
+                                <div class="percentage" style="width:{{$goal_percent}}%">{{$goal_percent}}%</div>
                             @elseif($goal_percent == 100.00)
                                 <div class="bar" style="width: {{$goal_percent}}%;background-color: darkred"></div>
+                                <div class="percentage" style="width:{{$goal_percent}}%">{{$goal_percent}}%</div>
                             @endif
                         @endif
                     </div>

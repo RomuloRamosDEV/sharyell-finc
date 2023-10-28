@@ -161,7 +161,10 @@ class Index extends Component
     public function filterDate() {
         $user = Auth::user();
 
-        if (isset($this->start_date) and isset($this->end_date)) {
+        if (!isset($this->start_date)) {
+            return to_route('dashboard')->with('problem', 'Por favor selecione ao menos uma data inicial.');
+        }
+        else if (isset($this->start_date) and isset($this->end_date)) {
 
             $this->categories = Categories::where('categories.user_id', $user->id)
                 ->where('categories.type', 'saida')
