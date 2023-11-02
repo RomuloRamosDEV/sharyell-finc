@@ -100,7 +100,7 @@ class MetasController extends Controller
 
    public function earn()
    {
-        $registros = Goal::all();
+        $registros = Goal::orderBy('month', 'asc')->get();
 
         return view('application.metas.entradas', compact('registros'));
    }

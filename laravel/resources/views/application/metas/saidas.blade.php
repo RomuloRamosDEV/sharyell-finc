@@ -18,7 +18,7 @@
                             <div class="upper">Mês</div>
                             <div class="down">{{ date('m/Y', strtotime($reg->month)) }}</div>
                         </div>
-                        
+
                         <div class="goal">
                             <div class="upper">Meta</div>
                             <div class="down">R$ {{ number_format($reg->goal_spend / 100, 2, ',', '.') }}</div>
