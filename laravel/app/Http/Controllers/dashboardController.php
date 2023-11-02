@@ -25,7 +25,7 @@ class DashboardController extends Controller
                 'value' => 'required',
                 'date' => 'required',
             ]);
-            
+
             $valor = str_replace([' ', ',', '.', 'R', '$'], '', $request->value);
 
             $ledger = new Ledger();
@@ -61,7 +61,7 @@ class DashboardController extends Controller
                 'value' => 'required',
                 'date' => 'required',
             ]);
-            
+
             $valor = str_replace([' ', ',', '.', 'R', '$'], '', $request->value);
 
             $ledger = new Ledger();
@@ -98,7 +98,7 @@ class DashboardController extends Controller
             $request->validate([
                 'goal_spend' => 'required',
             ]);
-            
+
             $valor = str_replace([' ', ',', '.', 'R', '$'], '', $request->goal_spend);
 
             $goal = Goal::where('user_id', $user->id)->whereMonth('month', '=', $month)->first();
@@ -115,7 +115,7 @@ class DashboardController extends Controller
                 $goal->goal_spend = $valor;
                 $goal->month = $month_save;
                 $goal->save();
-                
+
             }
 
             return to_route('dashboard')->with('success', 'Registro alterado com sucesso.');

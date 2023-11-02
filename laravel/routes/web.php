@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LedgerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MetasController;
 
@@ -22,6 +23,9 @@ Route::middleware('auth')->group(function () {
 
     //CRUD de Metas por usuário
     Route::resource('metas', MetasController::class);
+
+    //CRUD Ledger
+    Route::resource('registros', LedgerController::class);
 });
 
 

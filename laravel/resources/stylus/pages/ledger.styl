@@ -1,0 +1,71 @@
+.mainLedger
+    width 100%
+    height fit-content
+    .centre
+        display flex
+        flex-direction: column
+        align-items: center
+        h2
+            lato 24 normal
+            margin 30px 0 10px
+            text-transform: uppercase
+            color $verdeClaro
+        h1
+            lato 28 normal
+            text-transform: uppercase
+            background-color $verdeClaro
+            padding 10px 20px
+            border-radius: 10px
+            color $branco
+            margin 20px 10px
+
+        .areaMenu
+            width 100%
+            display flex
+            flex-direction: column
+            align-items: center
+            gap 10px
+            margin-top 30px
+            .lineLedger
+                width 90%
+                background-color $verdeMusgo
+                padding 10px
+                display flex
+                flex-direction: column
+                align-items: center
+                box-shadow: 0px 1px 5px #00000059
+                border-radius: 20px
+                gap 20px
+                @media(min-width:760px)
+                    gap 0
+                    flex-direction: row
+                    justify-content: space-evenly
+                    align-items: flex-start
+                    width 95%
+                .line
+                    display flex
+                    flex-direction: column
+                    align-items: center
+                    lato 16 normal
+                    color $preto
+                    @media(min-width:760px)
+                        lato 15 normal
+                        text-align: center
+                    @media(min-width:1200px)
+                        lato 17 normal
+                    span
+                        jakarta 14 normal
+                        color $branco_2
+                        text-transform: uppercase
+                        @media(min-width:760px)
+                            jakarta 10 normal
+                        @media(min-width:1200px)
+                            jakarta 16 normal
+                    .btn-group
+                        display flex
+                        width 100%
+                        .btn_edit, .btn_delete
+                            @media(max-width:1200px)
+                                width 70px
+                                jakarta 14 normal
+                                padding 0

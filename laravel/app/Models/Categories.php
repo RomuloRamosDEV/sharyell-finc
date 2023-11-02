@@ -27,11 +27,9 @@ class Categories extends Model
         'user_id', 'titulo', 'slug',
     ];
 
-   
     public function ledgers(): HasMany
     {
         return $this->hasMany(Ledger::class, 'category_id', 'id');
-        
     }
 
 }
