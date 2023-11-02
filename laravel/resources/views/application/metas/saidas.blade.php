@@ -8,15 +8,7 @@
 
 <main class="metas">
     <div class="center">
-        <div class="table">
-            <div class="header">
-                
-            </div>
-
-            <div class="card_line">
-
-            </div>
-        </div>
+        HELO CRUD DE METAS
     </div>
 </main>
 

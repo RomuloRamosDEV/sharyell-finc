@@ -11,10 +11,18 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        Dashboard
-                    </x-nav-link>
+                <div class="navigation_links">
+                    <a href="{{route('dashboard')}}">
+                        <div @if(request()->routeIs('dashboard')) class="nav_special_item active" @else class="nav_special_item" @endif>
+                            Dashboard
+                        </div>
+                    </a>
+
+                    <a href="{{route('metas.index')}}">
+                        <div @if(request()->routeIs('metas.*')) class="nav_special_item active" @else class="nav_special_item" @endif>
+                            Metas
+                        </div>
+                    </a>
                 </div>
             </div>
 
@@ -69,6 +77,10 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 Dashboard
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('metas.index')" :active="request()->routeIs('metas.*')">
+                Metas
             </x-responsive-nav-link>
         </div>
 

@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/setGoal', [DashboardController::class, 'setGoal'])->name('dashboard-goal');
 
     //CRUD de Metas por usuário
+    Route::get('metas/saidas', [MetasController::class, 'spend'])->name('metas-saida');
+    Route::get('metas/entradas', [MetasController::class, 'earn'])->name('metas-entrada');
     Route::resource('metas', MetasController::class);
 });
 

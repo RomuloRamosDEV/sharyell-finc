@@ -1,0 +1,50 @@
+.full
+    background-color: $roxo
+
+    .center
+        max-width: 1200px
+        margin: 0 auto
+        @media(max-width: 1200px)
+            max-width: 80%
+
+        .options
+            display: flex
+            height: 60px
+            align-items: center
+            column-gap: 35px
+
+            .button
+                position: relative
+                padding: 0 4px
+                color: $branco
+                jakarta 18
+                font-weight: 500
+                height: 50px
+                display: flex
+                align-items: center
+                justify-content: center
+                user-select: none
+                border-radius: 6px
+                transition: all 0.2s
+                &:hover
+                &.active
+                    &:after
+                        width: 100%
+                
+                &:after
+                    position: absolute
+                    content: ''
+                    width: 0
+                    height: 2px
+                    border-radius: 10px
+                    background-color: $verdeClaro
+                    bottom: 5px
+                    transition .2s ease
+                    &:hover
+                        width: 100%
+
+            .red_line
+                position: relative
+                &:after
+                    position: absolute
+                    background-color: red
