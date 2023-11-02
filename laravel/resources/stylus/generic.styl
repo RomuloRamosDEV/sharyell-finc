@@ -235,7 +235,7 @@ normalize();
         color: white
 
 .btn_edit
-    height: 35px
+    height: 30px
     padding: 0 10px
     jakarta 17
     background-color: darkgrey
@@ -253,7 +253,7 @@ normalize();
         background-color: $marrom_4
 
 .btn_delete
-    height: 35px
+    height: 30px
     padding: 0 10px
     jakarta 17
     background-color: darkred
@@ -392,3 +392,63 @@ normalize();
         margin-bottom: 15px
         text-align: center
 
+.delete_popup
+    position: fixed
+    z-index: 102
+    width: 80%
+    top: 0
+    left: 50%
+    transform: translateX(-50%)
+    margin-left: auto
+    margin-right: auto
+    margin-top: 95px
+    background-color: white
+    border-radius: 10px
+    padding: 25px 25px
+
+    .title
+        jakarta 16
+        margin-bottom: 15px
+        text-align: center
+
+    .flexer
+        display: flex
+        max-width: max-content
+        column-gap: 30px
+        margin: 0 auto
+
+        .btn_confirm
+            height: 35px
+            padding: 0 10px
+            jakarta 17
+            background-color: darkred
+            color: $branco
+            display: flex
+            justify-content: center
+            align-items: center
+            border-radius: 6px
+            cursor pointer
+            user-select: none
+            transition: all 0.3s
+            &:hover
+                transform: scale(1.03)
+                background-color: #610000
+
+.edit_popup
+    position: fixed
+    z-index: 102
+    width: 80%
+    top: 0
+    left: 50%
+    transform: translateX(-50%)
+    margin-left: auto
+    margin-right: auto
+    margin-top: 95px
+    background-color: white
+    border-radius: 10px
+    padding: 25px 25px
+
+    .title
+        jakarta 16
+        margin-bottom: 15px
+        text-align: center

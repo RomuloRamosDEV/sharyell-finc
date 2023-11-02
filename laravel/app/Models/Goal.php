@@ -10,7 +10,7 @@ class Goal extends Model
     protected $table = 'goals';
 
     protected $fillable = [
-        'user_id', 'goal_spend', 'goal_earn',
+        'user_id', 'goal_spend', 'goal_earn', 'month',
     ];
 
     public function user(): BelongsTo
