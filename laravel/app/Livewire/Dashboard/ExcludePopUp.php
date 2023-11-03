@@ -3,6 +3,8 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Categories;
+use Illuminate\Support\Facades\Auth;
+
 use Livewire\Component;
 
 class ExcludePopUp extends Component
@@ -13,7 +15,9 @@ class ExcludePopUp extends Component
 
     public function render()
     {
-        $this->categories = Categories::where('type', 'saida')->get();
+        $user = Auth::user();
+        
+        $this->categories = Categories::where('type', 'saida')->where('user_id', $user->id)->get();
 
         return view('livewire.dashboard.exclude-pop-up');
     }

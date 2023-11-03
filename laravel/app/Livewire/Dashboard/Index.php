@@ -54,7 +54,7 @@ class Index extends Component
             ->leftJoin('colors', 'colors.id', '=', 'categories.color')
             ->join('ledger', 'ledger.category_id', '=', 'categories.id')
             ->where('ledger.type', 'livre')
-            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->whereMonth('ledger.date', '=', $this->month)
             ->select('colors.color as hex', 'ledger.value as value', 'categories.*')
             ->get();
 
@@ -64,7 +64,7 @@ class Index extends Component
             ->leftJoin('colors', 'colors.id', '=', 'categories.color')
             ->join('ledger', 'ledger.category_id', '=', 'categories.id')
             ->where('ledger.type', 'fixo')
-            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->whereMonth('ledger.date', '=', $this->month)
             ->select('colors.color as hex', 'ledger.value as value','categories.*')
             ->get();
 
@@ -72,7 +72,7 @@ class Index extends Component
         $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
             ->join('categories', 'ledger.category_id', '=', 'categories.id')
             ->where('categories.type', 'saida')
-            ->selectRaw('DATE_FORMAT(ledger.created_at, "%m-%Y") as month, SUM(value) as total_spent')
+            ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
             ->get();
 
@@ -81,7 +81,7 @@ class Index extends Component
             ->where('ledger.type', 'livre')
             ->join('categories', 'categories.id', '=', 'ledger.category_id')
             ->where('categories.type', 'saida')
-            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->whereMonth('ledger.date', '=', $this->month)
             ->select('ledger.*')
             ->get();
         
@@ -92,7 +92,7 @@ class Index extends Component
             ->where('ledger.type', 'fixo')
             ->join('categories', 'categories.id', '=', 'ledger.category_id')
             ->where('categories.type', 'saida')
-            ->whereMonth('ledger.created_at', '=', $this->month)
+            ->whereMonth('ledger.date', '=', $this->month)
             ->select('ledger.*')
             ->get();
         
@@ -111,6 +111,7 @@ class Index extends Component
                 $this->goal_percent = 100;
             }
         }
+
     }
 
     public function render()
@@ -171,7 +172,7 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'livre')
-                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
+                ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
@@ -181,7 +182,7 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'fixo')
-                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
+                ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
@@ -191,7 +192,7 @@ class Index extends Component
                 ->where('ledger.type', 'livre')
                 ->join('categories', 'categories.id', '=', 'ledger.category_id')
                 ->where('categories.type', 'saida')
-                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
+                ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
                 ->select('ledger.*')
                 ->get();
     
@@ -202,7 +203,7 @@ class Index extends Component
                 ->where('ledger.type', 'fixo')
                 ->join('categories', 'categories.id', '=', 'ledger.category_id')
                 ->where('categories.type', 'saida')
-                ->where('ledger.created_at', '>=', $this->start_date)->where('ledger.created_at', '<=', $this->end_date)
+                ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
                 ->select('ledger.*')
                 ->get();
             
@@ -217,7 +218,7 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'livre')
-                ->where('ledger.created_at', '>=', $this->start_date)
+                ->where('ledger.date', '>=', $this->start_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
@@ -227,7 +228,7 @@ class Index extends Component
                 ->leftJoin('colors', 'colors.id', '=', 'categories.color')
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'fixo')
-                ->where('ledger.created_at', '>=', $this->start_date)
+                ->where('ledger.date', '>=', $this->start_date)
                 ->select('colors.color as hex', 'ledger.value as value',
                 'categories.*')
                 ->get();
@@ -237,7 +238,7 @@ class Index extends Component
                 ->where('ledger.type', 'livre')
                 ->join('categories', 'categories.id', '=', 'ledger.category_id')
                 ->where('categories.type', 'saida')
-                ->where('ledger.created_at', '>=', $this->start_date)
+                ->where('ledger.date', '>=', $this->start_date)
                 ->select('ledger.*')
                 ->get();
     
@@ -248,7 +249,7 @@ class Index extends Component
                 ->where('ledger.type', 'fixo')
                 ->join('categories', 'categories.id', '=', 'ledger.category_id')
                 ->where('categories.type', 'saida')
-                ->where('ledger.created_at', '>=', $this->start_date)
+                ->where('ledger.date', '>=', $this->start_date)
                 ->select('ledger.*')
                 ->get();
             
@@ -260,7 +261,7 @@ class Index extends Component
         $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
             ->join('categories', 'ledger.category_id', '=', 'categories.id')
             ->where('categories.type', 'saida')
-            ->selectRaw('DATE_FORMAT(ledger.created_at, "%m-%Y") as month, SUM(value) as total_spent')
+            ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
             ->get();
     }

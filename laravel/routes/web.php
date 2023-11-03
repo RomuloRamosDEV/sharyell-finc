@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FirstAccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MetasController;
 
@@ -11,6 +12,9 @@ Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->na
 
 //ROTAS AUTENTICADAS
 Route::middleware('auth')->group(function () {
+
+    Route::get('primeiro-acesso', [FirstAccessController::class, 'index'])->name('first-access');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

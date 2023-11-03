@@ -24,7 +24,7 @@ class Categories extends Model
     protected $table = 'categories';
 
     protected $fillable = [
-        'user_id', 'titulo', 'slug',
+        'user_id', 'titulo', 'slug', 'color', 'type'
     ];
 
    

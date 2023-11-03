@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Categories;
+use Illuminate\Support\Facades\Auth;
 
 use Livewire\Component;
 
@@ -14,7 +15,9 @@ class IncludePopUp extends Component
 
     public function render()
     {
-        $this->categories = Categories::where('type', 'entrada')->get();
+        $user = Auth::user();
+
+        $this->categories = Categories::where('type', 'entrada')->where('user_id', $user->id)->get();
 
         return view('livewire.dashboard.include-pop-up');
     }

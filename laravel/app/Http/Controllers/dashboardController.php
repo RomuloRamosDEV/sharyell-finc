@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index() {
 
-        return view('application.dashboard');
+        return view('application.dashboard'); 
     }
 
     public function earnAdd(Request $request) {

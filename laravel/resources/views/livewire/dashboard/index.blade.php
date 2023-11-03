@@ -2,8 +2,8 @@
     <div class="implements">
         <div class="center">
             <div class="filters">
-                <input type="date" class="date_input" wire:model='start_date' style="height: 45px">
-                <input type="date" class="date_input" wire:model='end_date' style="height: 45px">
+                <input type="date" class="date_input" wire:model='start_date' style="height: 45px" placeholder="Date">
+                <input type="date" class="date_input" wire:model='end_date' style="height: 45px" placeholder="Date">
 
                 <div class="btn_search" wire:click='filterDate' wire:loading.class="opacity-50" wire:target='filterDate'>
                     <img src="{{asset('img/layout/search-circle.svg')}}"  alt="">

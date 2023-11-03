@@ -2,8 +2,14 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="index, follow">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <base href="{{ url('/') }}">
+
+        <meta name="author" content="Uners Horizon">
+        <meta name="copyright" content="{{ date('Y') }} Uners Horizon">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
