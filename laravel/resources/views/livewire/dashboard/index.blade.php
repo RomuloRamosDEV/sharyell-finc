@@ -2,8 +2,8 @@
     <div class="implements">
         <div class="center">
             <div class="filters">
-                <input type="date" class="date_input" wire:model='start_date' style="height: 45px" placeholder="Date">
-                <input type="date" class="date_input" wire:model='end_date' style="height: 45px" placeholder="Date">
+                <input type="date" class="date_input" wire:model='start_date' style="height: 45px">
+                <input type="date" class="date_input" wire:model='end_date' style="height: 45px">
 
                 <div class="btn_search" wire:click='filterDate' wire:loading.class="opacity-50" wire:target='filterDate'>
                     <img src="{{asset('img/layout/search-circle.svg')}}"  alt="">
@@ -164,16 +164,44 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+
 <script 
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" 
-    integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" 
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" 
+    integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" 
     crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
 
 <script>
-    $(function() {
-      $('#currency').maskMoney();
-      $('#currency_spend').maskMoney();
-      $('#currency_goal').maskMoney();
-    })
+    $(document).ready(function(){
+        $('#currency').mask('000.000.000.000.000,00', {reverse: true});
+        $('#currency_spend').mask('000.000.000.000.000,00', {reverse: true});
+        $('#currency_goal').mask('000.000.000.000.000,00', {reverse: true});
+
+        $('#submit_button_2').on('click', function(){
+            var form = $('#spend_form')[0];
+            if(form.checkValidity()) {
+                $(this).prop('disabled', true);
+                $(this).text('Enviando...');
+                form.submit();
+                setTimeout(function(){
+                    $('#submit_button_2').prop('disabled', false);
+                    $('#submit_button_2').text('Enviar');
+                }, 6000);
+            }
+        });
+
+        $('#submit_button').on('click', function(){
+            var form = $('#earn_form')[0];
+            if(form.checkValidity()) {
+                $(this).prop('disabled', true);
+                $(this).text('Enviando...');
+                form.submit();
+                setTimeout(function(){
+                    $('#submit_button').prop('disabled', false);
+                    $('#submit_button').text('Enviar');
+                }, 6000);
+            }
+        });
+    });
 </script>
+

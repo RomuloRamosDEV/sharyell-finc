@@ -105,13 +105,15 @@ class Index extends Component
 
         // CALCULO DA PORCENTAGEM DA META
         if (isset($this->goals->goal_spend)) {
-            $this->goal_percent = round(($this->total_all / $this->goals->goal_spend) * 100, 2);
+            $this->goal_percent = round(($this->total_free / $this->goals->goal_spend) * 100, 2);
             
             if ($this->goal_percent >= 100) {
                 $this->goal_percent = 100;
             }
         }
 
+        $this->start_date = date('Y-m') . '-01';
+        $this->end_date = date('Y-m-t');
     }
 
     public function render()

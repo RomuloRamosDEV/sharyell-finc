@@ -100,14 +100,18 @@ class MetasController extends Controller
 
    public function earn()
    {
-        $registros = Goal::orderBy('month', 'asc')->get();
+        $user = Auth::user();
+
+        $registros = Goal::where('user_id', $user->id)->orderBy('month', 'asc')->get();
 
         return view('application.metas.entradas', compact('registros'));
    }
 
    public function spend()
    {
-        $registros = Goal::orderBy('month', 'asc')->get();
+        $user = Auth::user();
+
+        $registros = Goal::where('user_id', $user->id)->orderBy('month', 'asc')->get();
 
         return view('application.metas.saidas', compact('registros'));
    }

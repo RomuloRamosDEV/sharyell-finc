@@ -13,6 +13,13 @@ class ExcludePopUp extends Component
 
     public $category_id = 0;
 
+    public $date;
+
+    public function mount() 
+    {
+        $this->date = date('Y-m-d');
+    }
+
     public function render()
     {
         $user = Auth::user();

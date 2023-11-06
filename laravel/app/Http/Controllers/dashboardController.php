@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index() {
-
+    public function index() 
+    {
         return view('application.dashboard'); 
     }
 
@@ -37,6 +37,7 @@ class DashboardController extends Controller
 
             if(isset($request->remember)) {
                 $ledger->remember = $request->remember;
+                $ledger->type = 'fixo';
             } else {
                 $ledger->remember = 0;
             }
@@ -70,9 +71,10 @@ class DashboardController extends Controller
             $ledger->descricao = $request->descricao;
             $ledger->value = $valor;
             $ledger->date = $request->date;
-
+            
             if(isset($request->remember)) {
                 $ledger->remember = $request->remember;
+                $ledger->type = 'fixo';
             } else {
                 $ledger->remember = 0;
             }

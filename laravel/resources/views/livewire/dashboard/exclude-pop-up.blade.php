@@ -17,23 +17,23 @@
         <div class="fields">
             <img class="closer" src="{{asset('img/layout/close.svg')}}" alt="fechar" x-on:click="pop_spend = false">
 
-            <select class="select_default" name='category_id'>
+            <select class="select_default" name='category_id' required>
                 <option value="0" selected disabled>Categoria</option>
                 @foreach ($categories as $cat)    
                 <option value="{{$cat->id}}">{{$cat->titulo}}</option>
                 @endforeach
             </select>
         
-            <input class="input_text" type="text" placeholder="Nome do estabelecimento" name='descricao'>
+            <input class="input_text" type="text" placeholder="Nome do estabelecimento" name='descricao' required>
         
             <div class="number_live">
-                <input class="input_number" type="text" placeholder="R$" name="value" 
-                id="currency_spend" data-prefix="R$ " data-thousands="." data-decimal=",">
+                <input class="input_number" type="tel" inputmode="numeric" placeholder="R$" name="value" 
+                id="currency_spend" data-prefix="R$ " data-thousands="." data-decimal="," required>
             </div>
 
-            <input class="date_input" type="date" name='date'>
+            <input class="date_input" type="date" name='date' value={{$date}}>
         </div>
         
-        <button class="btn_create_negativo" type="submit" form="spend_form">Enviar</button>
+        <button class="btn_create_negativo" type="submit" form="spend_form" id="submit_button_2">Enviar</button>
     </form>
 </div>
