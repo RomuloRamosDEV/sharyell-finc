@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FirstAccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MetasController;
+use App\Http\Controllers\RegistrosController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::get('metas/saidas', [MetasController::class, 'spend'])->name('metas-saida');
     Route::get('metas/entradas', [MetasController::class, 'earn'])->name('metas-entrada');
     Route::resource('metas', MetasController::class);
+
+    //CRUD de Registros por usuário
+    Route::get('registros/saidas', [RegistrosController::class, 'regSpend'])->name('registros-saida');
+    Route::post('registros/saidas/pesquisa', [RegistrosController::class, 'regSearch'])->name('registros-pesquisa-saida');
+    Route::get('registros/entradas', [RegistrosController::class, 'regEarn'])->name('registros-entrada');
+    Route::resource('registros', RegistrosController::class);
 });
 
 

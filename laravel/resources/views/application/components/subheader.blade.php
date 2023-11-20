@@ -16,7 +16,18 @@
             @endif
 
             {{-- CRIAR OS LINKS DO LEDGER AQUI --}}
-            @if(request()->routeIs('ledger.*'))
+            @if(request()->routeIs('registros*'))
+                <a href="{{route('registros-saida')}}">
+                    <div @if(request()->routeIs('registros-saida') or request()->routeIs('registros-pesquisa-saida')) class="button red_line active" @else class="button red_line" @endif>
+                        Saída
+                    </div>
+                </a>
+            
+                <a href="{{route('registros-entrada')}}">
+                    <div @if(request()->routeIs('registros-entrada')) class="button active" @else class="button" @endif>
+                        Entrada
+                    </div>
+                </a>
             @endif
         </div>
     </div>
