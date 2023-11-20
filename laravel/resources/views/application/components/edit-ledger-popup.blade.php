@@ -1,5 +1,5 @@
-<div class="edit_popup" x-show="editLedgerPop" x-on:click.outside="editLedgerPop = false" style="display: none">
-    <h1 class="title">Editar Meta</h1>
+<div class="edit_ledger_popup" x-show="editLedgerPop" x-on:click.outside="editLedgerPop = false" style="display: none">
+    <h1 class="title">Editar Registro</h1>
 
     <form class="forms" id="update_form{{$reg->id}}" action="{{route('registros.update', $reg->id)}}" method="POST">
         @csrf
@@ -8,14 +8,48 @@
         <div class="fields">
             <img class="closer" src="{{asset('img/layout/close.svg')}}" alt="fechar" x-on:click="editLedgerPop = false">
 
-            {{-- FAZER AQUI INPUTS --}}
-        
-            <div class="number_live">
-                <input class="input_number" type="text" placeholder="R$" name="goal_spend" 
-                data-prefix="R$ " data-thousands="." data-decimal="," value="R$ {{ number_format($reg->goal_spend / 100, 2, ',', '.') }}">
+            <div class="object">
+                <label for="cat">Categoria</label>
+
+                <select name="cat_title" class="input_text" required id="cat">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ $reg->cat_id == $category->id ? 'selected' : '' }}>{{ $category->titulo }}</option>
+                    @endforeach
+                </select>
             </div>
 
-            <input type="date" name="month" class="date_input" value="{{$reg->month}}">
+            <div class="object">
+                <label for="descricao">Descrição</label>
+                <input type="text" name="descricao" class="input_text" required value="{{$reg->descricao}}" id="descricao">
+            </div>
+        
+            <div class="object">
+                <label for="value">Valor</label>
+
+                <div class="number_live">
+                    <input class="input_number" type="text" placeholder="R$" name="value" 
+                    data-prefix="R$ " data-thousands="." data-decimal="," value="{{ number_format($reg->value / 100, 2, ',', '.') }}" 
+                    id="value">
+                </div>
+            </div>
+
+            <div class="object">
+                <label for="date">Data</label>
+                <input type="date" name="date" class="date_input" value="{{$reg->date}}">
+            </div>
+
+            <div class="object">
+                <label for="type">Tipo</label>
+                <select name="type" class="input_text" style="height: 45px;" id="type">
+                    @if ($reg->type == 'livre')
+                        <option value="livre" style="text-transform:uppercase;" selected>LIVRE</option>
+                        <option value="fixo" style="text-transform:uppercase;">FIXO</option>
+                    @else
+                        <option value="fixo" style="text-transform:uppercase;" selected>FIXO</option>
+                        <option value="livre" style="text-transform:uppercase;">LIVRE</option>
+                    @endif
+                </select>
+            </div>
         </div>
         
         <button class="btn_create_negativo" type="submit" form="update_form{{$reg->id}}">Enviar</button>

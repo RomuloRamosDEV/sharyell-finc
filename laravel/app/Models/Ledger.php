@@ -10,7 +10,7 @@ class Ledger extends Model
     protected $table = 'ledger';
 
     protected $fillable = [
-        'user_id', 'category_id', 'descricao', 'value', 'remember',
+        'user_id', 'category_id', 'descricao', 'value', 'remember', 'type', 'date',
     ];
 
     public function category(): BelongsTo

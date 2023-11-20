@@ -10,7 +10,7 @@
         
             <div class="number_live">
                 <input class="input_number" type="text" placeholder="R$" name="goal_spend" 
-                data-prefix="R$ " data-thousands="." data-decimal="," value="R$ {{ number_format($reg->goal_spend / 100, 2, ',', '.') }}">
+                data-prefix="R$ " data-thousands="." data-decimal="," value="{{ number_format($reg->goal_spend / 100, 2, ',', '.') }}">
             </div>
 
             <input type="date" name="month" class="date_input" value="{{$reg->month}}">

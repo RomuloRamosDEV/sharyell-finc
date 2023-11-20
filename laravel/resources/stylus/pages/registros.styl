@@ -141,9 +141,12 @@ main.registros
                     .down
                         display: flex
                         height: 30px
+                    
+                    .pop_up_bg
+                        background-color: rgba(0,0,0,0.7)
 
-                    .edit_popup
-                        background-color: $roxo
+                    .edit_ledger_popup
+                        background-color: rgba(119, 61, 61, 0.9)
                         color: $branco
 
                         .closer
@@ -156,7 +159,7 @@ main.registros
                             cursor: pointer
 
                         .forms
-                            max-width: 380px
+                            max-width: 90%
                             margin: 0 auto
                             padding-bottom: 20px
 
@@ -169,6 +172,54 @@ main.registros
                                 align-items: center
                                 justify-content: center
                                 row-gap: 20px
+                                @media (max-width: 740px)
+                                    flex-direction: column
+                                    max-width: 440px
+                                    margin: 0 auto
+                                    margin-bottom: 50px
+
+                                .object
+                                    display: flex
+                                    flex-direction: column
+                                    @media (max-width: 740px)
+                                        width: 100% 
+
+                                    label
+                                        jakarta 15
+                                        margin-bottom: 2px
+                                        @media (max-width: 740px)
+                                            margin-bottom: 5px
+                                            text-align: center
+
+                                    input
+                                        @media (max-width: 740px)
+                                            width: 100%
+
+                                    select
+                                        max-width: 173px
+                                        @media (max-width: 740px)
+                                            width: 100%
+                                            max-width: 100%
+
+                                    .number_live
+                                        max-width:140px
+                                        @media (max-width: 740px)
+                                            width: 100%
+                                            max-width: 100%
+
+                                        .input_number
+                                            max-width:140px
+                                            @media (max-width: 740px)
+                                                width: 100%
+                                                max-width: 100%
+
+                                    #descricao
+                                        width: 350px
+                                        @media(max-width: 870px)
+                                            width: 250px
+                                        @media (max-width: 740px)
+                                            width: 100%
+
 
                                 .date_input
                                     @media(max-width: 870px)
@@ -176,13 +227,42 @@ main.registros
 
 .filters_reg
     margin-bottom: 30px
+    @media (max-width: 1220px)
+        width: 100%
 
-    .center
+    .centre
         max-width: 1200px
+        @media (max-width: 470px)
+            width: 100%
+            max-width: 100%
 
         form
             display: flex
             column-gap: 15px
+            @media (max-width: 1220px)
+                flex-direction: column
+                row-gap: 5px
+                align-items: center
+                width: 280px
+                margin: 0 auto
+                align-items: flex-end
+            @media (max-width: 470px)
+                width: 100%
 
             .input_text
                 color: $verdeMedio
+                @media (max-width: 1220px)
+                    width: 100%
+
+            .date_input
+                @media (max-width: 1220px)
+                    width: 100%
+
+            .input_limiter
+                max-width: 173px
+                @media (max-width: 1220px)
+                    max-width: 100%
+
+            .btn_search
+                @media (max-width: 1220px)
+                    width: 100%

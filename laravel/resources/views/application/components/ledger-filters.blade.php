@@ -1,5 +1,5 @@
 <div class="filters_reg">
-    <div class="center">
+    <div class="centre">
         @if(request()->routeIs('registros-saida') or request()->routeIs('registros-pesquisa-saida'))
             <form action="{{route('registros-pesquisa-saida')}}" method="POST">
                 @csrf
@@ -13,7 +13,7 @@
                     @endforeach
                 </select>
 
-                <select name="type" class="input_text" style="height: 45px; max-width: 173px">
+                <select name="type" class="input_text input_limiter" style="height: 45px;">
                     <option value="" selected disabled>Selecionar Tipo</option>
                     <option value="livre">Gasto Livre</option>
                     <option value="fixo">Gasto Fixo</option>

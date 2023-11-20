@@ -32,7 +32,7 @@ class RegistrosController extends Controller
         ->join('categories as cat', 'cat.id', '=', 'ledger.category_id')
         ->where('cat.type', 'saida')
         ->orderBy('ledger.date', 'desc')
-        ->select('cat.titulo as cat_titulo', 'cat.type as cat_type','ledger.*')
+        ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
         ->simplePaginate(20);
 
         $categories = Categories::where('user_id', $user->id)->where('type', 'saida')->get();
@@ -48,8 +48,22 @@ class RegistrosController extends Controller
         try {
             $user = Auth::user();
 
-            
-         
+            $valor = str_replace([' ', ',', '.', 'R', '$'], '', $request->value);
+
+            if($request->type == 'livre'){
+                $remember = 0;
+            } else if ($request->type == 'fixo') {
+                $remember = 1;
+            }
+
+            $registro->update([
+                'category_id' => $request->cat_title,
+                'descricao' => $request->descricao,
+                'value' => $valor,
+                'date' => $request->date,
+                'type' => $request->type,
+                'remember' => $remember,
+            ]);
 
             return to_route('registros-saida')->with('success', 'Registro alterado com sucesso.');
 
@@ -102,7 +116,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
-                ->select('cat.titulo as cat_titulo', 'cat.type as cat_type','ledger.*')
+                ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
             $categories = Categories::where('user_id', $user->id)->where('type', 'saida')->get();
@@ -121,7 +135,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
-                ->select('cat.titulo as cat_titulo', 'cat.type as cat_type','ledger.*')
+                ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
             $categories = Categories::where('user_id', $user->id)->where('type', 'saida')->get();
@@ -139,7 +153,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
-                ->select('cat.titulo as cat_titulo', 'cat.type as cat_type','ledger.*')
+                ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
             $categories = Categories::where('user_id', $user->id)->where('type', 'saida')->get();

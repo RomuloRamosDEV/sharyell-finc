@@ -60,6 +60,7 @@
                             <div class="btn_delete" x-on:click="deleteLedgerPop = true">Excluir</div>
 
                             <div class="pop_up_bg" style="display:none" x-show="deleteLedgerPop"></div>
+                            <div class="pop_up_bg" style="display:none" x-show="editLedgerPop"></div>
                             
                             @include('application.components.delete-ledger-popup')
                         </div>
