@@ -143,6 +143,34 @@
                     <div class="pop_up_bg" style="display:none" x-show="pop_goal"></div>
                 </div>
 
+                <div class="extra_info_2">
+                    <div class="bg_spent {{ $balanco < 0 ? '' : 'greeny' }}">
+                        <div class="spacing">
+                            <p class="free_spent">Ganho Geral: </p>
+                            <p class="free_spent" style="min-width:84px">R$ {{ number_format($earn_total_all / 100, 2, ',', '.') }}</p>
+                        </div>
+
+                        <div class="spacing">
+                            <p class="free_spent">Gasto Geral:</p>
+                            <p class="free_spent" style="min-width:84px">R$ {{ number_format($total_all / 100, 2, ',', '.') }}</p>
+                        </div>
+    
+                        <div class="spacing">
+                            <p class="free_spent" style="font-size:17px"><b>Balanço: </b></p>
+                            <p class="free_spent" style="min-width:84px;font-size:17px"><b>R$ {{ number_format($balanco / 100, 2, ',', '.') }}</b></p>
+                        </div>
+                    </div>
+    
+                    
+                    <h2 class="month_title">
+                        @if (isset($start_date))
+                            {{date("d/m/Y", strtotime($start_date))}}
+                        @else
+                            {{$monthNames[$month]}}
+                        @endif
+                    </h2>
+                </div>
+
             </div>
 
             

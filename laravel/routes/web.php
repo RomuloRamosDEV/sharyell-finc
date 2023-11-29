@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('registros/saidas', [RegistrosController::class, 'regSpend'])->name('registros-saida');
     Route::post('registros/saidas/pesquisa', [RegistrosController::class, 'regSearch'])->name('registros-pesquisa-saida');
     Route::get('registros/entradas', [RegistrosController::class, 'regEarn'])->name('registros-entrada');
+    Route::post('registros/entradas/pesquisa', [RegistrosController::class, 'regSearchEarn'])->name('registros-pesquisa-entrada');
     Route::resource('registros', RegistrosController::class);
 });
 

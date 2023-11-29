@@ -23,6 +23,11 @@ class Index extends Component
     public $total_fixed;
     public $total_all;
 
+    public $earn_total_free;
+    public $earn_total_fixed;
+    public $earn_total_all;
+    public $balanco;
+
     public $start_date;
     public $end_date;
     public $month;
@@ -100,13 +105,39 @@ class Index extends Component
 
         $this->total_all = $this->total_free + $this->total_fixed;
 
+        //GANHOS LIVRES TOTAIS
+        $this->earn_total_free = Ledger::where('ledger.user_id', $user->id)
+            ->where('ledger.type', 'livre')
+            ->join('categories', 'categories.id', '=', 'ledger.category_id')
+            ->where('categories.type', 'entrada')
+            ->whereMonth('ledger.date', '=', $this->month)
+            ->select('ledger.*')
+            ->get();
+        
+        $this->earn_total_free = $this->earn_total_free->sum('value');
+
+        //GANHOS FIXOS TOTAIS
+        $this->earn_total_fixed = Ledger::where('ledger.user_id', $user->id)
+            ->where('ledger.type', 'fixo')
+            ->join('categories', 'categories.id', '=', 'ledger.category_id')
+            ->where('categories.type', 'entrada')
+            ->whereMonth('ledger.date', '=', $this->month)
+            ->select('ledger.*')
+            ->get();
+        
+        $this->earn_total_fixed = $this->earn_total_fixed->sum('value');
+
+        $this->earn_total_all = $this->earn_total_free + $this->earn_total_fixed;
+
+        $this->balanco = $this->earn_total_all - $this->total_all;
+
         //META DE GASTO
         $this->goals = Goal::where('user_id', $user->id)->whereMonth('month', '=', $this->month)->first();
 
         // CALCULO DA PORCENTAGEM DA META
         if (isset($this->goals->goal_spend)) {
             $this->goal_percent = round(($this->total_free / $this->goals->goal_spend) * 100, 2);
-            
+            // dd($this->goal_percent);
             if ($this->goal_percent >= 100) {
                 $this->goal_percent = 100;
             }

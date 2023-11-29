@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Categories;
+use App\Models\Goal;
+use App\Models\Ledger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +51,21 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
+        $categories = Categories::where('user_id', $user->id)->get();
+        foreach ($categories as $category) {
+            $category->delete();
+        }
+
+        $ledger = Ledger::where('user_id', $user->id)->get();
+        foreach ($ledger as $item) {
+            $item->delete();
+        }
+
+        $goals = Goal::where('user_id', $user->id)->get();
+        foreach ($goals as $item) {
+            $item->delete();
+        }
+        
         Auth::logout();
 
         $user->delete();

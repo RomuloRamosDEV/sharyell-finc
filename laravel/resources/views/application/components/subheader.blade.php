@@ -24,7 +24,7 @@
                 </a>
             
                 <a href="{{route('registros-entrada')}}">
-                    <div @if(request()->routeIs('registros-entrada')) class="button active" @else class="button" @endif>
+                    <div @if(request()->routeIs('registros-entrada') or request()->routeIs('registros-pesquisa-saida')) class="button active" @else class="button" @endif>
                         Entrada
                     </div>
                 </a>

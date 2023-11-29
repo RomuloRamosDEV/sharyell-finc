@@ -8,11 +8,11 @@
 
 <main class="metas">
     <div class="center">
-        <h1 class="title">Metas de Gasto</h1>
+        <h1 class="title">Metas de Entrada (Em desenvolvimento, favor aguardar)</h1>
         
-        <div class="father">
+        {{-- <div class="father">
             @foreach ($registros as $reg)
-                @if(isset($reg->goal_earn))
+                @if(isset($reg->goal_spend))
                     <div class="card">
                         <div class="month">
                             <div class="upper">Mês</div>
@@ -42,7 +42,7 @@
                     </div>
                 @endif
             @endforeach
-        </div>
+        </div> --}}
     </div>
 </main>
 

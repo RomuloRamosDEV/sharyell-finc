@@ -6,43 +6,73 @@
 
 @include('application.components.subheader')
 
-<main class="metas">
+<main class="registros">
     <div class="center">
-        <h1 class="title">Registros de Entradas</h1>
+        @include('application.components.ledger-filters')
+
+        @if(request()->routeIs('registros-entrada'))
+            <h1 class="title">Todos os Registros de Entrada</h1>
+        @else
+            <h1 class="title">Pesquisa para Registros de Entrada</h1>
+        @endif
         
+        @if(request()->routeIs('registros-pesquisa-entrada'))
+        @else
+            {{ $registros->links() }}
+        @endif
+
         <div class="father">
             @foreach ($registros as $reg)
-                @if(isset($reg->goal_earn))
-                    <div class="card">
-                        <div class="month">
-                            <div class="upper">Mês</div>
-                            <div class="down">{{ date('m/Y', strtotime($reg->month)) }}</div>
-                        </div>
+                <div class="card green">
+                    <div class="category">
+                        <div class="upper">Categoria</div>
+                        <div class="down">{{$reg->cat_titulo}}</div>
+                    </div>
 
-                        <div class="goal">
-                            <div class="upper">Meta</div>
-                            <div class="down">R$ {{ number_format($reg->goal_spend / 100, 2, ',', '.') }}</div>
-                        </div>
+                    <div class="card_title">
+                        <div class="upper">Descrição</div>
+                        <div class="down">{{$reg->descricao}}</div>
+                    </div>
 
-                        <div class="manage" x-data="{deletePop: false, editPop: false}">
-                            <div class="upper">Gerenciar</div>
-                            <div class="down">
+                    <div class="value">
+                        <div class="upper">Valor</div>
+                        <div class="down">R$ {{ number_format($reg->value / 100, 2, ',', '.') }}</div>
+                    </div>
 
-                                <button class="btn_edit" x-on:click="editPop = true">Editar</button>
+                    <div class="month">
+                        <div class="upper">Data</div>
+                        <div class="down">{{ date('d/m/Y', strtotime($reg->date)) }}</div>
+                    </div>
 
-                                @include('application.components.edit-popup')
+                    <div class="type">
+                        <div class="upper">Tipo</div>
+                        <div class="down">{{$reg->type}}</div>
+                    </div>
 
-                                <div class="btn_delete" x-on:click="deletePop = true">Excluir</div>
+                    <div class="manage" x-data="{deleteLedgerPop: false, editLedgerPop: false}">
+                        <div class="upper">Gerenciar</div>
+                        <div class="down">
 
-                                <div class="pop_up_bg" style="display:none" x-show="deletePop"></div>
-                                
-                                @include('application.components.delete-popup')
-                            </div>
+                            <button class="btn_edit" x-on:click="editLedgerPop = true">Editar</button>
+
+                            @include('application.components.edit-ledger-popup')
+
+                            <div class="btn_delete" x-on:click="deleteLedgerPop = true">Excluir</div>
+
+                            <div class="pop_up_bg" style="display:none" x-show="deleteLedgerPop"></div>
+                            <div class="pop_up_bg" style="display:none" x-show="editLedgerPop"></div>
+                            
+                            @include('application.components.delete-ledger-popup')
                         </div>
                     </div>
-                @endif
+                </div>
             @endforeach
         </div>
+
+        @if(request()->routeIs('registros-pesquisa-entrada'))
+        @else
+            {{ $registros->links() }}
+        @endif
     </div>
 </main>
 

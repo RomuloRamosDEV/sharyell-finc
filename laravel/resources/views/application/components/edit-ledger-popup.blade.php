@@ -1,4 +1,6 @@
-<div class="edit_ledger_popup" x-show="editLedgerPop" x-on:click.outside="editLedgerPop = false" style="display: none">
+<div @if(request()->routeIs('registros-entrada') or request()->routeIs('registros-pesquisa-entrada')) class="edit_ledger_popup green" 
+    @else class="edit_ledger_popup" @endif x-show="editLedgerPop" x-on:click.outside="editLedgerPop = false" style="display: none">
+    
     <h1 class="title">Editar Registro</h1>
 
     <form class="forms" id="update_form{{$reg->id}}" action="{{route('registros.update', $reg->id)}}" method="POST">
