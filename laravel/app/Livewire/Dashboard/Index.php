@@ -8,6 +8,7 @@ use App\Models\Ledger;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Index extends Component
@@ -51,7 +52,7 @@ class Index extends Component
     {
         $user = Auth::user();
 
-        $this->month = date('m'); // Obtém o mês atual
+        $this->month = date('m-Y'); // Obtém o mês e o ano atual em uma única variável
 
         //GASTOS LIVRES
         $this->categories = Categories::where('categories.user_id', $user->id)
@@ -59,7 +60,7 @@ class Index extends Component
             ->leftJoin('colors', 'colors.id', '=', 'categories.color')
             ->join('ledger', 'ledger.category_id', '=', 'categories.id')
             ->where('ledger.type', 'livre')
-            ->whereMonth('ledger.date', '=', $this->month)
+            ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('colors.color as hex', 'ledger.value as value', 'categories.*')
             ->get();
 
@@ -69,7 +70,7 @@ class Index extends Component
             ->leftJoin('colors', 'colors.id', '=', 'categories.color')
             ->join('ledger', 'ledger.category_id', '=', 'categories.id')
             ->where('ledger.type', 'fixo')
-            ->whereMonth('ledger.date', '=', $this->month)
+            ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('colors.color as hex', 'ledger.value as value','categories.*')
             ->get();
 
@@ -77,6 +78,7 @@ class Index extends Component
         $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
             ->join('categories', 'ledger.category_id', '=', 'categories.id')
             ->where('categories.type', 'saida')
+            ->whereYear('ledger.date', '=', date('Y'))
             ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
             ->get();
@@ -86,7 +88,7 @@ class Index extends Component
             ->where('ledger.type', 'livre')
             ->join('categories', 'categories.id', '=', 'ledger.category_id')
             ->where('categories.type', 'saida')
-            ->whereMonth('ledger.date', '=', $this->month)
+            ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
         
@@ -97,7 +99,7 @@ class Index extends Component
             ->where('ledger.type', 'fixo')
             ->join('categories', 'categories.id', '=', 'ledger.category_id')
             ->where('categories.type', 'saida')
-            ->whereMonth('ledger.date', '=', $this->month)
+            ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
         
@@ -110,7 +112,7 @@ class Index extends Component
             ->where('ledger.type', 'livre')
             ->join('categories', 'categories.id', '=', 'ledger.category_id')
             ->where('categories.type', 'entrada')
-            ->whereMonth('ledger.date', '=', $this->month)
+            ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
         
@@ -121,7 +123,7 @@ class Index extends Component
             ->where('ledger.type', 'fixo')
             ->join('categories', 'categories.id', '=', 'ledger.category_id')
             ->where('categories.type', 'entrada')
-            ->whereMonth('ledger.date', '=', $this->month)
+            ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
         
@@ -183,7 +185,7 @@ class Index extends Component
         
         //Grafico dos meses de gastos
         $lineChartModel = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
-
+        
         foreach ($this->monthSpent as $month) {
             $month->total_spent = (double)number_format($month->total_spent / 100, 2, '.', '');
             $lineChartModel->addSeriesPoint('Linha', $month->month, $month->total_spent)->addColor('#b70000');
