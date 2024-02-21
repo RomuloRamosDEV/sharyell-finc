@@ -95,6 +95,10 @@
                 Registros
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('previsoes-index')" :active="request()->routeIs('previsoes*')">
+                Previsões
+            </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('metas.index')" :active="request()->routeIs('metas*')">
                 Metas
             </x-responsive-nav-link>
