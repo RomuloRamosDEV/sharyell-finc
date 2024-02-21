@@ -5,6 +5,7 @@ use App\Http\Controllers\FirstAccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\PrevisoesController;
+use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\RegistrosController;
 
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/earn', [DashboardController::class, 'earnAdd'])->name('dashboard-earn');
     Route::post('/dashboard/spend', [DashboardController::class, 'spendAdd'])->name('dashboard-spend');
     Route::post('/dashboard/setGoal', [DashboardController::class, 'setGoal'])->name('dashboard-goal');
+
+    //CRUD de Categorias
+    Route::resource('categorias', CategoriasController::class);
 
     //CRUD de Metas por usuário
     Route::get('metas/saidas', [MetasController::class, 'spend'])->name('metas-saida');

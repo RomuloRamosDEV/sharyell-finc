@@ -30,6 +30,12 @@
                         </div>
                     </a>
 
+                    <a href="{{route('categorias.index')}}">
+                        <div @if(request()->routeIs('categorias*')) class="nav_special_item active" @else class="nav_special_item" @endif>
+                            Categorias
+                        </div>
+                    </a>
+
                     <a href="{{route('metas.index')}}">
                         <div @if(request()->routeIs('metas*')) class="nav_special_item active" @else class="nav_special_item" @endif>
                             Metas
@@ -97,6 +103,10 @@
 
             <x-responsive-nav-link :href="route('previsoes-index')" :active="request()->routeIs('previsoes*')">
                 Previsões
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias*')">
+                Categorias
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('metas.index')" :active="request()->routeIs('metas*')">

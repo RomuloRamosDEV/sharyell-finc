@@ -4,46 +4,61 @@
     <div class="btn_create" x-on:click="modalCreate = true" wire:click='modaller'>Novo Planejamento</div>
 
     <div class="external">
-        @foreach ($previsoes as $previsao)  
-        <div class="card_previsao">
-            <div class="category">
-                <p class="cat">{{$previsao->categoria}}</p>
+        @foreach ($previsoes as $previsao)
+            @if($previsao->categoria != null)
+            <div class="card_previsao">
+                <div class="category">
+                    <p class="cat">{{$previsao->categoria}}</p>
 
-                <p class="total_value">R$ {{ number_format($previsao->top_value / 100, 2, ',', '.') }}</p>
-            </div>
+                    <p class="total_value">R$ {{ number_format($previsao->top_value / 100, 2, ',', '.') }}</p>
+                </div>
 
-            <div class="percentage">
-                <div class="bar_box">
-                    @if ($previsao->percent <= 20.10)
-                        <div class="bar" style="width: {{$previsao->percent}}%;background-color: #5ab65f"></div>
-                    @elseif($previsao->percent <= 69.00)
-                        <div class="bar" style="width: {{$previsao->percent}}%;background-color: #5ab65f"></div>
-                        <div class="percent" style="width:{{$previsao->percent}}%">{{$previsao->percent}}%</div>
-                    @elseif($previsao->percent >= 69.01 and $previsao->percent <= 99.99)
-                        <div class="bar" style="width: {{$previsao->percent}}%;background-color: #61958E"></div>
-                        <div class="percent" style="width:{{$previsao->percent}}%">{{$previsao->percent}}%</div>
-                    @elseif($previsao->percent == 100.00)
-                        <div class="bar" style="width: {{$previsao->percent}}%;background-color: darkred"></div>
-                        <div class="percent" style="width:{{$previsao->percent}}%">{{$previsao->percent}}%</div>
-                    @endif
+                <div class="percentage">
+                    <div class="bar_box">
+                        @if ($previsao->percent <= 20.10)
+                            <div class="bar" style="width: {{$previsao->percent}}%;background-color: #5ab65f"></div>
+                        @elseif($previsao->percent <= 69.00)
+                            <div class="bar" style="width: {{$previsao->percent}}%;background-color: #5ab65f"></div>
+                            <div class="percent" style="width:{{$previsao->percent}}%">{{$previsao->percent}}%</div>
+                        @elseif($previsao->percent >= 69.01 and $previsao->percent <= 99.99)
+                            <div class="bar" style="width: {{$previsao->percent}}%;background-color: #61958E"></div>
+                            <div class="percent" style="width:{{$previsao->percent}}%">{{$previsao->percent}}%</div>
+                        @elseif($previsao->percent == 100.00)
+                            <div class="bar" style="width: {{$previsao->percent}}%;background-color: darkred"></div>
+                            <div class="percent" style="width:{{$previsao->percent}}%">{{$previsao->percent}}%</div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="value">
+                    <p>Valor Gasto:</p>
+                    <p>R$ {{ number_format($previsao->value_now / 100, 2, ',', '.') }}</p>
+                </div>
+
+                <div class="btns">
+                    <a href="{{route('previsoes-edit', $previsao->id)}}">
+                        <div class="btn_edit">
+                            Editar
+                        </div>
+                    </a>
+                    
+                    <div class="btn_delete" wire:click='destroy({{$previsao->id}})'>Excluir</div>
                 </div>
             </div>
-
-            <div class="value">
-                <p>Valor Gasto:</p>
-                <p>R$ {{ number_format($previsao->value_now / 100, 2, ',', '.') }}</p>
-            </div>
-
-            <div class="btns">
-                <a href="{{route('previsoes-edit', $previsao->id)}}">
-                    <div class="btn_edit">
-                        Editar
+            @else
+                <div class="card_previsao">
+                    <div class="category">
+                        <p class="cat">Categoria Excluida favor Apagar</p>
                     </div>
-                </a>
-                
-                <div class="btn_delete" wire:click='destroy({{$previsao->id}})'>Excluir</div>
-            </div>
-        </div>
+
+                    <div class="btns">      
+                        <div class="btn_delete" wire:click='destroy({{$previsao->id}})'
+                            style="border-top-left-radius: 6px; border-bottom-left-radius:6px; margin-top:30px">
+                            Excluir
+                        </div>
+                    </div>
+                </div>
+            @endif
         @endforeach
     </div>
 
