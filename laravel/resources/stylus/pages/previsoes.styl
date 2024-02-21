@@ -1,0 +1,213 @@
+main.previsoes
+    padding: 40px 0
+
+    .center
+        max-width: 1200px
+        margin: 0 auto
+        @media(max-width: 1220px)
+            max-width: 80%
+            
+        .title
+            jakarta 20
+            text-align: center
+            font-weight: 600
+            margin-bottom: 40px
+
+        .btn_create
+            margin-left: auto
+
+        .external
+            display: flex
+            justify-content: flex-start
+            width: 1101px
+            column-gap: 25px
+            row-gap: 25px
+            flex-wrap: wrap
+            margin-top: 40px
+            margin-left: auto
+            margin-right: auto
+            @media(max-width: 1220px)
+                width: 730px
+            @media(max-width: 900px)
+                width: 351px
+            @media(max-width: 440px)
+                width: 100%
+
+            .card_previsao
+                width: 350px
+                padding: 20px
+                background-color: $grey800
+                border-radius: 8px
+
+                .category
+                    display: flex
+                    justify-content: space-between
+                    column-gap: 15px
+                    margin-bottom: 10px
+
+                    .cat
+                        jakarta 15
+                        color: $branco
+
+                    .total_value
+                        jakarta 15
+                        color: $branco
+
+                .percentage
+                    .bar_box
+                        position: relative
+                        border: 1px solid $verdeMusgo
+                        border-radius: 4px
+                        height: 35px
+                        padding: 5px
+
+                        .bar
+                            background-color: $verdeClaro
+                            height: 100%
+
+                        .percent
+                            position: absolute
+                            z-index: 3
+                            color: white
+                            jakarta 14
+                            left: 1px
+                            top: 5px
+                            text-align: center
+
+                .value
+                    display: flex
+                    column-gap: 15px
+                    margin-top: 10px
+
+                    p
+                        jakarta 14
+                        color: $branco
+
+                .btns
+                    margin-top: 15px
+                    display: flex
+                    justify-content: center
+
+                    .btn_edit
+                        width: 90px
+
+                    .btn_delete
+                        width: 90px
+
+    .new_popup
+        background-color: $grey800
+        max-width: 410px
+
+        .pop_title
+            jakarta 18
+            color: $branco
+
+        .fields
+            position: relative
+            display flex
+            column-gap: 10px
+            margin-top: 15px
+            justify-content: space-between
+            @media(max-width: 1030px)
+                flex-wrap: wrap
+                row-gap: 15px
+
+            .closer
+                position: absolute
+                right: -13px
+                top: -54px
+                height: 28px
+                cursor: pointer
+                transition: all 0.4s
+                @media (max-width: 1030px)
+                    top: -97px
+                &:hover
+                    transform: scale(1.4)
+
+            .line
+                display: flex
+                flex-direction: column
+                row-gap: 5px
+
+                label
+                    jakarta 16
+                    color: $branco
+
+            .select_default
+                width: 170px
+                @media(max-width: 1030px)
+                    width: 100%
+
+            .input_text
+                width: 380px
+                @media(max-width: 1030px)
+                    width: 100%
+                &::placeholder
+                    color: $verdeMedio
+                    font-weight: 400
+
+            .number_live
+                position: relative
+                @media(max-width: 1030px)
+                    width: 48%
+                @media (max-width: 390px)
+                    width: 100%
+
+                .input_number
+                    width: 170px
+                    @media(max-width: 1030px)
+                        width: 100%
+                    &::placeholder
+                        color: $verdeMedio
+                        font-weight: 400
+
+                p
+                    jakarta 14
+                    color: white
+
+        .message
+            padding: 10px
+            background-color: darkred
+            margin-top: 10px
+            color: white
+            border-radius: 6px
+
+//EDIT
+.previsoes_edit
+    .a_back
+        display: block
+        width: 450px
+        margin: 20px auto
+        
+    .mob_centre
+        max-width: 450px
+        background-color: $grey800
+        margin: 50px auto
+        padding: 20px
+        border-radius: 10px
+
+        form
+            .line
+                display: flex
+                column-gap: 15px
+                align-items: center
+                justify-content: space-between
+                margin-bottom: 20px
+                @media(max-width: 370px)
+                    flex-direction: column
+                    row-gap: 10px
+
+                label
+                    jakarta 15
+                    color: $branco
+
+                .select_default
+                    width: 178px
+
+                .input_number
+                    width: 178px
+
+            .btn_update
+                margin-left: auto
+                margin-top: 30px
+                margin-right: auto

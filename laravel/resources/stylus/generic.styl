@@ -160,7 +160,7 @@ normalize();
     width: 150px
     height: 45px
     jakarta 17
-    background-color: $marrom_3
+    background-color: $verdeClaro
     color: $branco
     display: flex
     justify-content: center
@@ -171,7 +171,7 @@ normalize();
     user-select: none
     &:hover
         transform: scale(1.03)
-        background-color: $marrom_4
+        background-color: $verdeMusgo
 
 .adder
     background-color: $verdeClaro
@@ -197,7 +197,7 @@ normalize();
     width: 180px
     height: 45px
     jakarta 17
-    background-color: $marrom_2
+    background-color: $verdeClaro
     color: $branco
     display: flex
     justify-content: center
@@ -208,7 +208,7 @@ normalize();
     transition: all 0.3s
     &:hover
         transform: scale(1.03)
-        background-color: $marrom_4
+        background-color: $verdeMedio
 
 .btn_create_negativo
     width: 180px
@@ -365,6 +365,35 @@ normalize();
 
 
 //POP UP GENERICO
+.new_popup_bg
+    position fixed
+    z-index: 101
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    background-color: rgba(0,0,0,0.7)
+
+    .new_popup
+        position: fixed
+        z-index: 102
+        width: 80%
+        top: 0
+        left: 50%
+        transform: translateX(-50%)
+        margin-left: auto
+        margin-right: auto
+        margin-top: 95px
+        background-color: white
+        border-radius: 10px
+        padding: 25px 25px
+
+        p
+            jakarta 16
+            margin-bottom: 15px
+            text-align: center
+
+
 .pop_up_bg
     position fixed
     z-index: 101
