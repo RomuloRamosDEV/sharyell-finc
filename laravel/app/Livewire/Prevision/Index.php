@@ -19,6 +19,8 @@ class Index extends Component
     //Campos
     public $catInput = 0;
     public $valueInput;
+    public $start_date;
+    public $end_date;
     
     public $month;
     public $modal = true;
@@ -101,11 +103,9 @@ class Index extends Component
     public function destroy($id)
     {  
         try {
-
             Previsao::where('id', $id)->delete();
 
             $this->mount();
-            
         } catch (\Exception $e) {
             $this->message = 'Erro: '.$e->getMessage();
         }
@@ -116,4 +116,60 @@ class Index extends Component
         $this->modal = true;
         $this->mount();
     }
+
+    public function filterDate()
+    {
+        $user = Auth::user();
+
+        if (!isset($this->start_date)) {
+            return to_route('previsoes-index')->with('problem', 'Por favor selecione ao menos uma data inicial.');
+        } else if (isset($this->start_date) and isset($this->end_date)) {
+
+            $this->previsoes = Previsao::where('previsoes.user_id', $user->id)
+            ->leftJoin('categories as cat', 'previsoes.category_id', '=', 'cat.id')
+            ->select('previsoes.*', 'cat.titulo as categoria')
+            ->get();
+
+            foreach ($this->previsoes as $previsao) { 
+                $gastos = Ledger::where('category_id', $previsao->category_id)
+                ->where('user_id', $user->id)
+                ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
+                ->get();
+                
+                $previsao->value_now = $gastos->sum('value');
+                $previsao->percent = round(($previsao->value_now / $previsao->top_value) * 100, 2);
+                if($previsao->percent > 100){
+                    $previsao->percent = 100;
+                }
+                $previsao->save();
+            }
+
+        } elseif (isset($this->start_date)) {
+
+            $this->previsoes = Previsao::where('previsoes.user_id', $user->id)
+            ->leftJoin('categories as cat', 'previsoes.category_id', '=', 'cat.id')
+            ->select('previsoes.*', 'cat.titulo as categoria')
+            ->get();
+
+            foreach ($this->previsoes as $previsao) { 
+                $gastos = Ledger::where('category_id', $previsao->category_id)
+                ->where('user_id', $user->id)
+                ->where('ledger.date', '>=', $this->start_date)
+                ->get();
+                
+                $previsao->value_now = $gastos->sum('value');
+                $previsao->percent = round(($previsao->value_now / $previsao->top_value) * 100, 2);
+                if($previsao->percent > 100){
+                    $previsao->percent = 100;
+                }
+                $previsao->save();
+            }
+        }
+    }
+
+    public function cleanFilter()
+    {
+        return to_route('previsoes-index');
+    }
+
 }

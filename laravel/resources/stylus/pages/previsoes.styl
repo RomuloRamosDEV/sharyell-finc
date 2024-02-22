@@ -1,9 +1,43 @@
 main.previsoes
-    padding: 40px 0
+    .implements
+        padding-top: 10px
+        padding-bottom: 10px
+        background-color: #ddd9e2
+
+        .centre
+            display: flex
+            max-width: 1200px
+            margin-left: auto
+            margin-right: auto
+            column-gap: 35px
+            justify-content: space-between
+            align-items: center
+            @media (max-width: 1230px)  
+                flex-direction: column
+                row-gap: 24px
+            @media (max-width: 550px)
+                row-gap: 60px
+
+        .filters
+            display: flex
+            column-gap: 10px
+            @media (max-width: 550px)
+                flex-wrap: wrap
+                justify-content: center
+                row-gap: 20px
+                padding: 0 20px
+                max-width: 360px
+
+            .btn_search 
+                @media (max-width: 550px)
+                    width: 80%
+                    height: 35px
+                @media (max-width: 370px)
+                    width: 50%
 
     .center
-        max-width: 1200px
-        margin: 0 auto
+        max-width: 1101px
+        margin: 40px auto
         @media(max-width: 1220px)
             max-width: 80%
             
@@ -26,6 +60,7 @@ main.previsoes
             margin-top: 40px
             margin-left: auto
             margin-right: auto
+            padding-bottom: 70px
             @media(max-width: 1220px)
                 width: 730px
             @media(max-width: 900px)
