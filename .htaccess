@@ -1,0 +1,7 @@
+Options +SymLinksIfOwnerMatch
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^financy.uners.com.br$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.financy.uners.com.br$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
