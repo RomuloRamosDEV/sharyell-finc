@@ -36,11 +36,11 @@
                         </div>
                     </a>
 
-                    <a href="{{route('metas.index')}}">
+                    {{-- <a href="{{route('metas.index')}}">
                         <div @if(request()->routeIs('metas*')) class="nav_special_item active" @else class="nav_special_item" @endif>
                             Metas
                         </div>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
 
@@ -109,9 +109,9 @@
                 Categorias
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('metas.index')" :active="request()->routeIs('metas*')">
+            {{-- <x-responsive-nav-link :href="route('metas.index')" :active="request()->routeIs('metas*')">
                 Metas
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->
