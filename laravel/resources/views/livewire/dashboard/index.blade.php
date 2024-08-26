@@ -35,7 +35,7 @@
     </div>
 
     <div class="centre">
-        <h2 class="super_title mt-5">Gastos</h2>
+        <h2 class="mt-5 super_title">Gastos</h2>
 
         <div class="father">
             <div class="card">

@@ -81,6 +81,7 @@ class Index extends Component
             ->whereYear('ledger.date', '=', date('Y'))
             ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
+            ->orderBy('month', 'asc')
             ->get();
 
         //GASTOS LIVRES TOTAIS
