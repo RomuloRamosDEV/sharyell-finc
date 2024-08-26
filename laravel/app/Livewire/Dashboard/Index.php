@@ -32,7 +32,7 @@ class Index extends Component
     public $start_date;
     public $end_date;
     public $month;
-
+    public $filter = false;
     public $monthNames = [
         1 => 'Janeiro',
         2 => 'Fevereiro',
@@ -196,6 +196,7 @@ class Index extends Component
     }
 
     public function filterDate() {
+        $this->filter = true;
         $user = Auth::user();
 
         if (!isset($this->start_date)) {

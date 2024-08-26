@@ -18,6 +18,10 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/layout/favicon-16x16.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/layout/favicon-32x32.png') }}">
+        
+        <link rel="shortcut icon" href="{{ asset('img/layout/mobile_icon_resized.png') }}" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/layout/mobile_icon_180x180.png') }}">
 
         @livewireStyles
 
@@ -29,8 +33,8 @@
 
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <header class="bg-white shadow dark:bg-gray-800">
+                <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>

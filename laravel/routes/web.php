@@ -6,6 +6,7 @@ use App\Http\Controllers\MetasController;
 use App\Http\Controllers\PrevisoesController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\RegistrosController;
+use App\Http\Controllers\VideosController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,8 @@ Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->na
 
 //ROTAS AUTENTICADAS
 Route::middleware('auth')->group(function () {
+
+    Route::get('/first-access/{user}', [DashboardController::class, 'firstAccess'])->name('first-access');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -43,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('registros/entradas', [RegistrosController::class, 'regEarn'])->name('registros-entrada');
     Route::post('registros/entradas/pesquisa', [RegistrosController::class, 'regSearchEarn'])->name('registros-pesquisa-entrada');
     Route::resource('registros', RegistrosController::class);
+
+    Route::get('/videos', [VideosController::class, 'index'])->name('videos-index');
 });
 
 

@@ -1,0 +1,42 @@
+.videos_index
+    background-color: $cinza
+    min-height: 100%
+
+    .centre
+        padding-top: 50px
+        max-width: 900px
+        margin: 0 auto
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+        row-gap: 30px
+        column-gap: 30px
+        @media (max-width: 1040px)
+            max-width: 401px
+        @media (max-width: 600px)
+            max-width: 281px
+        .card
+            width 400px
+            border-radius: 6px
+            overflow: hidden
+            background-color: $branco
+            @media (max-width: 600px)
+                width: 280px
+
+            .video
+                width: 380px
+                height: 215px
+                margin: 0 auto
+                margin-top: 15px
+                border-radius: 6px
+                overflow: hidden
+                @media (max-width: 600px)
+                    width: 270px
+                    height: 158px
+
+            .title
+                jakarta 18
+                text-align: center
+                color: $roxo
+                margin-top: 15px
+                margin-bottom: 15px

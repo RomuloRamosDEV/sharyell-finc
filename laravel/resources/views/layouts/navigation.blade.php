@@ -36,11 +36,11 @@
                         </div>
                     </a>
 
-                    {{-- <a href="{{route('metas.index')}}">
-                        <div @if(request()->routeIs('metas*')) class="nav_special_item active" @else class="nav_special_item" @endif>
-                            Metas
+                    <a href="{{route('videos-index')}}">
+                        <div @if(request()->routeIs('videos*')) class="nav_special_item active" @else class="nav_special_item" @endif>
+                            Vídeos
                         </div>
-                    </a> --}}
+                    </a>
                 </div>
             </div>
 
@@ -109,9 +109,9 @@
                 Categorias
             </x-responsive-nav-link>
 
-            {{-- <x-responsive-nav-link :href="route('metas.index')" :active="request()->routeIs('metas*')">
-                Metas
-            </x-responsive-nav-link> --}}
+            <x-responsive-nav-link :href="route('videos-index')" :active="request()->routeIs('videos*')">
+                Vídeos
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

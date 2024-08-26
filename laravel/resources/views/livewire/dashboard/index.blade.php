@@ -181,10 +181,16 @@
                 </div>
 
                 <div class="graph_liner">
+                    @if ($filter == true)
+                        <p style="margin-top: 20px;text-align: center;padding: 0 20px;">Gráfico anual desabilitado ao utilizar filtro mensal. Caso queira visualizar o gráfico anual, 
+                            <a href="{{ route('dashboard') }}" style="color: darkblue;text-decoration: underline;">clique aqui</a>.
+                        </p>
+                    @else
                     <livewire:livewire-line-chart
                         key="{{ $lineChartModel->reactiveKey() }}"
                         :line-chart-model="$lineChartModel"
                     />
+                    @endif
                 </div>
             </div>
         </div>

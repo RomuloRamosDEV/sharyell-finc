@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Goal;
 use App\Models\Ledger;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -125,5 +126,13 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return to_route('dashboard')->with('problem', 'Erro ao incluir registro: ' . $e->getMessage());
         }
+    }
+
+    public function firstAccess(User $user) {
+
+        $user->first_access = 0;
+        $user->update();
+
+        return to_route('dashboard')->with('success', 'Primeiro acesso concluído com sucesso.');
     }
 }

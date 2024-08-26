@@ -18,6 +18,7 @@ class RegistrosController extends Controller
         ->join('categories as cat', 'cat.id', '=', 'ledger.category_id')
         ->where('cat.type', 'entrada')
         ->orderBy('ledger.date', 'desc')
+        ->orderBy('ledger.id', 'desc')
         ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
         ->simplePaginate(20);
 
@@ -37,6 +38,7 @@ class RegistrosController extends Controller
         ->join('categories as cat', 'cat.id', '=', 'ledger.category_id')
         ->where('cat.type', 'saida')
         ->orderBy('ledger.date', 'desc')
+        ->orderBy('ledger.id', 'desc')
         ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
         ->simplePaginate(20);
 
@@ -124,6 +126,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.type as cat_type','ledger.*')
                 ->get();
 
@@ -143,6 +146,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
@@ -162,6 +166,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
@@ -180,6 +185,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
@@ -206,6 +212,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.type as cat_type','ledger.*')
                 ->get();
 
@@ -225,6 +232,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
@@ -244,6 +252,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
@@ -262,6 +271,7 @@ class RegistrosController extends Controller
                 ->where('ledger.date', '>=', $request->start_date)
                 ->where('ledger.date', '<=', $request->end_date)
                 ->orderBy('ledger.date', 'desc')
+                ->orderBy('ledger.id', 'desc')
                 ->select('cat.titulo as cat_titulo', 'cat.id as cat_id', 'cat.type as cat_type','ledger.*')
                 ->get();
 
