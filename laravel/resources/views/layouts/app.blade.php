@@ -22,9 +22,18 @@
         
         <link rel="shortcut icon" href="{{ asset('img/layout/mobile_icon_resized.png') }}" type="image/x-icon">
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/layout/mobile_icon_180x180.png') }}">
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
 
         @livewireStyles
-
+        
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(() => console.log('Service Worker registered!'))
+                    .catch(error => console.log('Service Worker registration failed:', error));
+            }
+        </script>
+        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/stylus/main.styl'])
     </head>

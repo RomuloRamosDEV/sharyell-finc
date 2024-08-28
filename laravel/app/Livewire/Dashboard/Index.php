@@ -152,38 +152,6 @@ class Index extends Component
 
     public function render()
     {
-        //Chamada para gráfico principal de GASTO LIVRE
-        $total = $this->categories->groupBy('titulo')->map(function ($category) {
-            $category->value = $category->sum('value');
-            return $category; // Retorna a categoria completa com o valor atualizado
-        });
-        
-        $pieChartModel = (new PieChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->setOpacity(0.85);
-
-        $this->categories = $this->categories->unique('titulo');
-
-        foreach ($this->categories as $category) {
-            if (isset($total[$category->titulo])) {
-                $pieChartModel->addSlice($category->titulo, $total[$category->titulo]->value, $category->hex);
-            }
-        }
-
-        //Chamada para gráfico principal de GASTO FIXO
-        $total_fixo = $this->categories_fixo->groupBy('titulo')->map(function ($category_fixo) {
-            $category_fixo->value = $category_fixo->sum('value');
-            return $category_fixo; // Retorna a categoria completa com o valor atualizado
-        });
-
-        $pieChartModelFixo = (new PieChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->setOpacity(0.85);
-
-        $this->categories_fixo = $this->categories_fixo->unique('titulo');
-
-        foreach ($this->categories_fixo as $cat_fixo) {
-            if (isset($total_fixo[$cat_fixo->titulo])) {
-                $pieChartModelFixo->addSlice($cat_fixo->titulo, $total_fixo[$cat_fixo->titulo]->value, $cat_fixo->hex);
-            }
-        }
-        
         //Grafico dos meses de gastos
         $lineChartModel = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
         
@@ -192,7 +160,56 @@ class Index extends Component
             $lineChartModel->addSeriesPoint('Linha', $month->month, $month->total_spent)->addColor('#b70000');
         }
 
+        $pieChartModel = $this->generatePieChartModel();
+        $pieChartModelFixo = $this->generatePieChartModelFixo();
+
         return view('livewire.dashboard.index', compact('pieChartModel', 'pieChartModelFixo', 'lineChartModel'));
+    }
+
+    private function generatePieChartModel()
+    {
+        $model = (new PieChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->setOpacity(0.85);
+
+        //Chamada para gráfico principal de GASTO LIVRE
+        $total = $this->categories->groupBy('titulo')->map(function ($category) {
+            $category->value = $category->sum('value');
+            return $category; // Retorna a categoria completa com o valor atualizado
+        });
+
+        $this->categories = $this->categories->unique('titulo');
+
+        foreach ($this->categories as $category) {
+            $formattedValue = number_format($total[$category->titulo]->value / 100, 2, ',', '.');
+            $label = "{$category->titulo}: R$ {$formattedValue}";
+            if (isset($total[$category->titulo])) {
+                $model->addSlice($label, $total[$category->titulo]->value, $category->hex);
+            }
+        }
+
+        return $model;
+    }
+
+    private function generatePieChartModelFixo()
+    {
+        $model = (new PieChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->setOpacity(0.85);
+
+        // Chamada para gráfico principal de GASTO FIXO
+        $total_fixo = $this->categories_fixo->groupBy('titulo')->map(function ($category_fixo) {
+            $category_fixo->value = $category_fixo->sum('value');
+            return $category_fixo; // Retorna a categoria completa com o valor atualizado
+        });
+
+        $this->categories_fixo = $this->categories_fixo->unique('titulo');
+
+        foreach ($this->categories_fixo as $cat_fixo) {
+            $formattedValue = number_format($total_fixo[$cat_fixo->titulo]->value / 100, 2, ',', '.');
+            $label = "{$cat_fixo->titulo}: R$ {$formattedValue}";
+            if (isset($total_fixo[$cat_fixo->titulo])) {
+                $model->addSlice($label, $total_fixo[$cat_fixo->titulo]->value, $cat_fixo->hex);
+            }
+        }
+
+        return $model;
     }
 
     public function filterDate() {

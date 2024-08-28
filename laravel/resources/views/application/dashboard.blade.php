@@ -24,10 +24,20 @@
 
                 <a href="{{ route('first-access', $user->id) }}" class="btn_create">Concluir</a>
             </div>
-            
-            
         </div>
     @endif
 </div>
 
+<script>
+let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Previne o prompt padrão de instalação
+        e.preventDefault();
+        // Guarda o evento para ser disparado mais tarde
+        deferredPrompt = e;
+        // Exibe o botão de instalação
+        document.getElementById('install-button').style.display = 'block';
+        });
+</script>
 @endsection

@@ -14,6 +14,8 @@
                 </div>
             </div>
 
+            <button id="install-button" style="display: none;">Instalar App</button>
+
             <div class="buttons" x-data="{pop_earn: false, pop_spend: false}">
                 <div class="btn_add_spent" x-on:click="pop_spend = true">
                     <img src="{{asset('img/layout/remove-circle-outline.svg')}}" alt="remover">
