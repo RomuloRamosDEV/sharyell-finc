@@ -29,7 +29,7 @@
 </div>
 
 <script>
-let deferredPrompt;
+    let deferredPrompt;
 
     window.addEventListener('beforeinstallprompt', (e) => {
         // Previne o prompt padrão de instalação
@@ -37,7 +37,20 @@ let deferredPrompt;
         // Guarda o evento para ser disparado mais tarde
         deferredPrompt = e;
         // Exibe o botão de instalação
-        document.getElementById('install-button').style.display = 'block';
-        });
+        document.getElementById('install-button').style.display = 'flex';
+    });
+
+    document.getElementById('install-button').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('Usuário aceitou a instalação');
+            } else {
+                console.log('Usuário recusou a instalação');
+            }
+            deferredPrompt = null;
+        }
+    });
 </script>
 @endsection

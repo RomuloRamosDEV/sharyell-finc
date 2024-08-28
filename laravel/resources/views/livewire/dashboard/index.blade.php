@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <button id="install-button" style="display: none;">Instalar App</button>
+            <button id="install-button" style="display: none;" class="btn_install">Instalar App</button>
 
             <div class="buttons" x-data="{pop_earn: false, pop_spend: false}">
                 <div class="btn_add_spent" x-on:click="pop_spend = true">

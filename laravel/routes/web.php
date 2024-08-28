@@ -18,6 +18,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/first-access/{user}', [DashboardController::class, 'firstAccess'])->name('first-access');
 
+    //ROTA PARA O SERVICE WORKER
+    Route::get('/service-worker.js', function () {
+        return response()->file(public_path('service-worker.js'), ['Content-Type' => 'application/javascript']);
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
