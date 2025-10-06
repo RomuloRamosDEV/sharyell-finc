@@ -17,6 +17,7 @@ class Index extends Component
     public $categories_fixo;
     public $categories_investimentos;
     public $monthSpent;
+    public $monthSpentWithoutInvestments;
     public $goals;
     public $goal_percent;
 
@@ -79,6 +80,17 @@ class Index extends Component
         $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
             ->join('categories', 'ledger.category_id', '=', 'categories.id')
             ->where('categories.type', 'saida')
+            ->whereYear('ledger.date', '=', date('Y'))
+            ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        //GASTOS POR MÊS SEM INVESTIMENTOS
+        $this->monthSpentWithoutInvestments = Ledger::where('ledger.user_id', $user->id)
+            ->join('categories', 'ledger.category_id', '=', 'categories.id')
+            ->where('categories.type', 'saida')
+            ->where('categories.titulo', '!=', 'Investimentos')
             ->whereYear('ledger.date', '=', date('Y'))
             ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
@@ -166,17 +178,25 @@ class Index extends Component
     public function render()
     {
         //Grafico dos meses de gastos
-        $lineChartModel = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
+        $lineChartModel = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
 
         foreach ($this->monthSpent as $month) {
             $month->total_spent = (float)number_format($month->total_spent / 100, 2, '.', '');
             $lineChartModel->addSeriesPoint('Linha', $month->month, $month->total_spent)->addColor('#b70000');
         }
 
+        //Grafico dos meses de gastos sem investimentos
+        $lineChartModelWithoutInvestments = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
+
+        foreach ($this->monthSpentWithoutInvestments as $month) {
+            $month->total_spent = (float)number_format($month->total_spent / 100, 2, '.', '');
+            $lineChartModelWithoutInvestments->addSeriesPoint('Linha', $month->month, $month->total_spent)->addColor('#2563eb');
+        }
+
         $pieChartModel = $this->generatePieChartModel();
         $pieChartModelFixo = $this->generatePieChartModelFixo();
 
-        return view('livewire.dashboard.index', compact('pieChartModel', 'pieChartModelFixo', 'lineChartModel'));
+        return view('livewire.dashboard.index', compact('pieChartModel', 'pieChartModelFixo', 'lineChartModel', 'lineChartModelWithoutInvestments'));
     }
 
     private function generatePieChartModel()
@@ -364,6 +384,14 @@ class Index extends Component
         $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
             ->join('categories', 'ledger.category_id', '=', 'categories.id')
             ->where('categories.type', 'saida')
+            ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
+            ->groupBy('month')
+            ->get();
+
+        $this->monthSpentWithoutInvestments = Ledger::where('ledger.user_id', $user->id)
+            ->join('categories', 'ledger.category_id', '=', 'categories.id')
+            ->where('categories.type', 'saida')
+            ->where('categories.titulo', '!=', 'Investimentos')
             ->selectRaw('DATE_FORMAT(ledger.date, "%m-%Y") as month, SUM(value) as total_spent')
             ->groupBy('month')
             ->get();
