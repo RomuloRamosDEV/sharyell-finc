@@ -23,6 +23,7 @@ class Index extends Component
     public $total_free;
     public $total_fixed;
     public $total_all;
+    public $total_all_without_investments;
 
     public $earn_total_free;
     public $earn_total_fixed;
@@ -71,7 +72,7 @@ class Index extends Component
             ->join('ledger', 'ledger.category_id', '=', 'categories.id')
             ->where('ledger.type', 'fixo')
             ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
-            ->select('colors.color as hex', 'ledger.value as value','categories.*')
+            ->select('colors.color as hex', 'ledger.value as value', 'categories.*')
             ->get();
 
         //GASTOS POR MÊS
@@ -92,7 +93,7 @@ class Index extends Component
             ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
-        
+
         $this->total_free = $this->total_free->sum('value');
 
         //GASTOS FIXOS TOTAIS
@@ -103,10 +104,22 @@ class Index extends Component
             ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
-        
+
         $this->total_fixed = $this->total_fixed->sum('value');
 
         $this->total_all = $this->total_free + $this->total_fixed;
+
+        //GASTOS TOTAIS SEM INVESTIMENTOS (para cálculo da meta)
+        $total_investments = Ledger::where('ledger.user_id', $user->id)
+            ->join('categories', 'categories.id', '=', 'ledger.category_id')
+            ->where('categories.type', 'saida')
+            ->where('categories.titulo', 'Investimentos')
+            ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
+            ->select('ledger.*')
+            ->get();
+        
+        $total_investments = $total_investments->sum('value');
+        $this->total_all_without_investments = $this->total_all - $total_investments;
 
         //GANHOS LIVRES TOTAIS
         $this->earn_total_free = Ledger::where('ledger.user_id', $user->id)
@@ -116,7 +129,7 @@ class Index extends Component
             ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
-        
+
         $this->earn_total_free = $this->earn_total_free->sum('value');
 
         //GANHOS FIXOS TOTAIS
@@ -127,7 +140,7 @@ class Index extends Component
             ->where(DB::raw('DATE_FORMAT(ledger.date, "%m-%Y")'), '=', $this->month)
             ->select('ledger.*')
             ->get();
-        
+
         $this->earn_total_fixed = $this->earn_total_fixed->sum('value');
 
         $this->earn_total_all = $this->earn_total_free + $this->earn_total_fixed;
@@ -137,9 +150,9 @@ class Index extends Component
         //META DE GASTO
         $this->goals = Goal::where('user_id', $user->id)->whereMonth('month', '=', $this->month)->first();
 
-        // CALCULO DA PORCENTAGEM DA META
+        // CALCULO DA PORCENTAGEM DA META (sem incluir investimentos)
         if (isset($this->goals->goal_spend)) {
-            $this->goal_percent = round(($this->total_free / $this->goals->goal_spend) * 100, 2);
+            $this->goal_percent = round(($this->total_all_without_investments / $this->goals->goal_spend) * 100, 2);
             // dd($this->goal_percent);
             if ($this->goal_percent >= 100) {
                 $this->goal_percent = 100;
@@ -154,9 +167,9 @@ class Index extends Component
     {
         //Grafico dos meses de gastos
         $lineChartModel = (new LineChartModel())->setTitle(' ')->withDataLabels()->setAnimated(true)->multiLine();
-        
+
         foreach ($this->monthSpent as $month) {
-            $month->total_spent = (double)number_format($month->total_spent / 100, 2, '.', '');
+            $month->total_spent = (float)number_format($month->total_spent / 100, 2, '.', '');
             $lineChartModel->addSeriesPoint('Linha', $month->month, $month->total_spent)->addColor('#b70000');
         }
 
@@ -212,14 +225,14 @@ class Index extends Component
         return $model;
     }
 
-    public function filterDate() {
+    public function filterDate()
+    {
         $this->filter = true;
         $user = Auth::user();
 
         if (!isset($this->start_date)) {
             return to_route('dashboard')->with('problem', 'Por favor selecione ao menos uma data inicial.');
-        }
-        else if (isset($this->start_date) and isset($this->end_date)) {
+        } else if (isset($this->start_date) and isset($this->end_date)) {
 
             $this->categories = Categories::where('categories.user_id', $user->id)
                 ->where('categories.type', 'saida')
@@ -227,8 +240,11 @@ class Index extends Component
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'livre')
                 ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
-                ->select('colors.color as hex', 'ledger.value as value',
-                'categories.*')
+                ->select(
+                    'colors.color as hex',
+                    'ledger.value as value',
+                    'categories.*'
+                )
                 ->get();
 
             $this->categories_fixo = Categories::where('categories.user_id', $user->id)
@@ -237,8 +253,11 @@ class Index extends Component
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'fixo')
                 ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
-                ->select('colors.color as hex', 'ledger.value as value',
-                'categories.*')
+                ->select(
+                    'colors.color as hex',
+                    'ledger.value as value',
+                    'categories.*'
+                )
                 ->get();
 
             //GASTOS LIVRES TOTAIS
@@ -249,7 +268,7 @@ class Index extends Component
                 ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
                 ->select('ledger.*')
                 ->get();
-    
+
             $this->total_free = $this->total_free->sum('value');
 
             //GASTOS FIXOS TOTAIS
@@ -260,10 +279,22 @@ class Index extends Component
                 ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
                 ->select('ledger.*')
                 ->get();
-            
+
             $this->total_fixed = $this->total_fixed->sum('value');
 
             $this->total_all = $this->total_free + $this->total_fixed;
+
+            //GASTOS TOTAIS SEM INVESTIMENTOS (para cálculo da meta) - FILTRO COM DUAS DATAS
+            $total_investments = Ledger::where('ledger.user_id', $user->id)
+                ->join('categories', 'categories.id', '=', 'ledger.category_id')
+                ->where('categories.type', 'saida')
+                ->where('categories.titulo', 'Investimentos')
+                ->where('ledger.date', '>=', $this->start_date)->where('ledger.date', '<=', $this->end_date)
+                ->select('ledger.*')
+                ->get();
+            
+            $total_investments = $total_investments->sum('value');
+            $this->total_all_without_investments = $this->total_all - $total_investments;
 
         } elseif (isset($this->start_date)) {
 
@@ -273,8 +304,11 @@ class Index extends Component
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'livre')
                 ->where('ledger.date', '>=', $this->start_date)
-                ->select('colors.color as hex', 'ledger.value as value',
-                'categories.*')
+                ->select(
+                    'colors.color as hex',
+                    'ledger.value as value',
+                    'categories.*'
+                )
                 ->get();
 
             $this->categories_fixo = Categories::where('categories.user_id', $user->id)
@@ -283,8 +317,11 @@ class Index extends Component
                 ->join('ledger', 'ledger.category_id', '=', 'categories.id')
                 ->where('ledger.type', 'fixo')
                 ->where('ledger.date', '>=', $this->start_date)
-                ->select('colors.color as hex', 'ledger.value as value',
-                'categories.*')
+                ->select(
+                    'colors.color as hex',
+                    'ledger.value as value',
+                    'categories.*'
+                )
                 ->get();
 
             //GASTOS LIVRES TOTAIS
@@ -295,7 +332,7 @@ class Index extends Component
                 ->where('ledger.date', '>=', $this->start_date)
                 ->select('ledger.*')
                 ->get();
-    
+
             $this->total_free = $this->total_free->sum('value');
 
             //GASTOS FIXOS TOTAIS
@@ -306,10 +343,22 @@ class Index extends Component
                 ->where('ledger.date', '>=', $this->start_date)
                 ->select('ledger.*')
                 ->get();
-            
+
             $this->total_fixed = $this->total_fixed->sum('value');
 
             $this->total_all = $this->total_free + $this->total_fixed;
+
+            //GASTOS TOTAIS SEM INVESTIMENTOS (para cálculo da meta) - FILTRO COM UMA DATA
+            $total_investments = Ledger::where('ledger.user_id', $user->id)
+                ->join('categories', 'categories.id', '=', 'ledger.category_id')
+                ->where('categories.type', 'saida')
+                ->where('categories.titulo', 'Investimentos')
+                ->where('ledger.date', '>=', $this->start_date)
+                ->select('ledger.*')
+                ->get();
+            
+            $total_investments = $total_investments->sum('value');
+            $this->total_all_without_investments = $this->total_all - $total_investments;
         }
 
         $this->monthSpent = Ledger::where('ledger.user_id', $user->id)
@@ -320,7 +369,8 @@ class Index extends Component
             ->get();
     }
 
-    public function cleanFilter() {
+    public function cleanFilter()
+    {
         return to_route('dashboard');
     }
 }
