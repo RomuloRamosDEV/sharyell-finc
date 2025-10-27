@@ -136,12 +136,20 @@
                                 <img src="{{ asset('img/layout/add-circle-outline.svg') }}" alt="add">
                             </div>
                         </div>
+                        <div class="goal_spent">
+                            <div class="number">Gasto até o momento: R$
+                                {{ number_format($total_all_without_investments / 100, 2, ',', '.') }}</div>
+                        </div>
                     @else
                         <div class="goal_add">
                             <div class="number">Sem meta de gasto para este mês</div>
                             <div class="adder" x-on:click="pop_goal = true">
                                 <img src="{{ asset('img/layout/add-circle-outline.svg') }}" alt="add">
                             </div>
+                        </div>
+                        <div class="goal_spent">
+                            <div class="number">Gasto até o momento: R$
+                                {{ number_format($total_all_without_investments / 100, 2, ',', '.') }}</div>
                         </div>
                     @endif
 
