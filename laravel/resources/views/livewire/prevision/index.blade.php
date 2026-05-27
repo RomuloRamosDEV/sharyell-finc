@@ -21,6 +21,35 @@
         
         <div class="btn_create" x-on:click="modalCreate = true" wire:click='modaller'>Novo Planejamento</div>
 
+        <div class="summary_container">
+            <div class="summary_card planned">
+                <div class="summary_info">
+                    <span class="summary_label">Total Planejado</span>
+                    <span class="summary_val">R$ {{ number_format($totalPlanejado / 100, 2, ',', '.') }}</span>
+                </div>
+                <div class="summary_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4FBB8B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="6"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="summary_card spent">
+                <div class="summary_info">
+                    <span class="summary_label">Total Gasto</span>
+                    <span class="summary_val">R$ {{ number_format($totalGasto / 100, 2, ',', '.') }}</span>
+                </div>
+                <div class="summary_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7A9A90" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
         <div class="external">
             @foreach ($previsoes as $previsao)
                 @if($previsao->categoria != null)

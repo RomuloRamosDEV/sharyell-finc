@@ -15,6 +15,8 @@ class Index extends Component
     public $previsoes;
     public $categories;
     public $message;
+    public $totalPlanejado = 0;
+    public $totalGasto = 0;
 
     //Campos
     public $catInput = 0;
@@ -55,6 +57,7 @@ class Index extends Component
             ->where('type', 'saida')->get();
 
         $this->edit = false;
+        $this->calculateTotals();
     }
 
     public function render()
@@ -165,6 +168,14 @@ class Index extends Component
                 $previsao->save();
             }
         }
+        $this->calculateTotals();
+    }
+
+    public function calculateTotals()
+    {
+        $active = $this->previsoes->filter(fn($p) => !is_null($p->categoria));
+        $this->totalPlanejado = $active->sum('top_value');
+        $this->totalGasto = $active->sum('value_now');
     }
 
     public function cleanFilter()

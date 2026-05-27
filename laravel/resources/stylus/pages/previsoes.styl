@@ -50,6 +50,60 @@ main.previsoes
         .btn_create
             margin-left: auto
 
+        .summary_container
+            display: flex
+            justify-content: space-between
+            column-gap: 25px
+            row-gap: 20px
+            flex-wrap: wrap
+            margin-top: 30px
+            margin-bottom: 20px
+            width: 100%
+
+            .summary_card
+                display: flex
+                align-items: center
+                justify-content: space-between
+                width: 350px
+                padding: 20px
+                background-color: $grey800
+                border-radius: 8px
+                border-left: 5px solid $verdeClaro
+                transition: transform 0.3s, box-shadow 0.3s
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05)
+                
+                &:hover
+                    transform: translateY(-2px)
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1)
+
+                &.spent
+                    border-left-color: $verdeMusgo
+
+                .summary_info
+                    display: flex
+                    flex-direction: column
+                    row-gap: 5px
+
+                    .summary_label
+                        jakarta 14
+                        color: rgba(255, 255, 255, 0.7)
+                        font-weight: 500
+                        text-transform: uppercase
+                        letter-spacing: 0.5px
+
+                    .summary_val
+                        jakarta 22
+                        font-weight: 700
+                        color: $branco
+
+                .summary_icon
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    background-color: rgba(255, 255, 255, 0.05)
+                    padding: 10px
+                    border-radius: 50%
+
         .external
             display: flex
             justify-content: flex-start
